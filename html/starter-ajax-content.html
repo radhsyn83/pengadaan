@@ -1,0 +1,12 @@
+<p>Hi, this content is loaded via ajax</p>
+
+<script>
+  var script = [
+    '../js/app.min.js'
+  ]
+  App.loadPlugins(null, script).then(() => {
+
+    // your script here
+
+  }).then(() => App.stopLoading())
+</script>

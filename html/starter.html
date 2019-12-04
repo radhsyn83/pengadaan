@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Font & Icon -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+
+  <!-- Plugins -->
+  <!-- CSS plugins goes here -->
+
+  <!-- Main Style -->
+  <link rel="stylesheet" href="../css/style.min.css" id="main-css">
+
+  <!-- Choose your theme or leave blank for default -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-blue.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-cyan.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-dark.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-gray.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-green.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-pink.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-purple.min.css" id="sidebar-css"> -->
+  <!-- <link rel="stylesheet" href="../css/sidebar-red.min.css" id="sidebar-css"> -->
+
+  <title>Mimity Admin</title>
+</head>
+
+<body>  <!-- use <body class="sidebar-collapse"> to have a collapsed sidebar -->
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <!-- Sidebar header -->
+    <div class="sidebar-header">
+      <a href="index.html" class="logo">
+        <img src="../img/logo.svg" alt="Logo" id="main-logo">
+        Your brand
+      </a>
+      <a href="#" class="nav-link nav-icon rounded-circle ml-auto" data-toggle="sidebar">
+        <i class="material-icons">close</i>
+      </a>
+    </div>
+    <!-- /Sidebar header -->
+
+    <!-- Sidebar body -->
+    <div class="sidebar-body">
+      <ul class="nav nav-sub mt-3" id="menu">
+        <li class="nav-item">
+          <a class="nav-link has-icon active" href="starter.html"><i class="material-icons">link</i>Menu item (active)</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link has-icon" href="starter.html"><i class="material-icons">link</i>Menu item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link has-icon" href="starter.html"><i class="material-icons">link</i>Menu item</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link has-icon dropdown-toggle" href="#"><i class="material-icons">link</i>Submenu</a>
+          <ul>
+            <li><a href="starter.html">Submenu item</a></li>
+            <li><a href="starter.html">Submenu item</a></li>
+            <li><a href="starter.html">Submenu item</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link has-icon dropdown-toggle" href="#"><i class="material-icons">link</i>Submenu</a>
+          <ul>
+            <li><a href="starter.html">Submenu item</a></li>
+            <li><a href="starter.html">Submenu item</a></li>
+            <li><a href="starter.html">Submenu item</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- /Sidebar body -->
+
+  </div>
+  <!-- /Sidebar -->
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Main header -->
+    <div class="main-header">
+      <a class="nav-link nav-icon rounded-circle" href="#" data-toggle="sidebar"><i class="material-icons">menu</i></a>
+      <ul class="nav nav-circle nav-gap-x-1 ml-auto">
+        <li class="nav-item"><a class="nav-link nav-icon" data-toggle="modal" href="#searchModal"><i class="material-icons">search</i></a></li>
+        <li class="nav-item dropdown nav-notif">
+          <a class="nav-link nav-icon has-badge dropdown-toggle no-caret" href="#" data-toggle="dropdown" data-display="static">
+            <i class="material-icons">notifications</i>
+            <span class="badge badge-pill badge-primary">2</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right shadow p-0">
+            <form>
+              <div class="card border-0">
+                <div class="card-header d-flex bg-primary text-white">
+                  <i class="material-icons mr-2">notifications</i> 2 Notifications
+                </div>
+                <div class="card-body p-1 font-size-sm">
+                  <div class="list-group list-group-sm list-group-flush">
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                      <div class="media">
+                        <span class="bg-primary-faded text-primary btn-icon rounded-circle"><i class="material-icons">person_add</i></span>
+                        <div class="media-body ml-2">
+                          5 New members joined today
+                          <div class="small text-muted mt-1 d-flex align-items-center">
+                            <i class="material-icons mr-1 font-size-sm">access_time</i> 5 minutes ago
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                    <a href="javascript:void(0)" class="list-group-item list-group-item-action">
+                      <div class="media">
+                        <span class="bg-info-faded text-info btn-icon rounded-circle"><i class="material-icons">comment</i></span>
+                        <div class="media-body ml-2">
+                          2 New comments
+                          <div class="small text-muted mt-1 d-flex align-items-center">
+                            <i class="material-icons mr-1 font-size-sm">access_time</i> 10 minutes ago
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-footer text-center">
+                  <a href="javascript:void(0)">See all notifications &rsaquo;</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </li>
+      </ul>
+      <ul class="nav nav-pills">
+        <li class="nav-link-divider mx-2"></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link has-img dropdown-toggle" href="#" data-toggle="dropdown">
+            <img src="../img/user.svg" alt="User" class="rounded-circle mr-2">
+            <span class="d-none d-sm-block">User</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right font-size-sm">
+            <a class="dropdown-item has-icon pr-5" href="javascript:void(0)"><i class="material-icons mr-2">link</i>Dropdown item</a>
+            <a class="dropdown-item has-icon pr-5" href="javascript:void(0)"><i class="material-icons mr-2">link</i>Dropdown item</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item has-icon pr-5 text-danger" href="javascript:void(0)"><i class="material-icons mr-2">exit_to_app</i> Dropdown item</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <!-- /Main header -->
+
+    <!-- Main body -->
+    <div class="main-body">
+
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="main-breadcrumb">
+        <ol class="breadcrumb breadcrumb-style2">
+          <li class="breadcrumb-item"><a href="starter.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="javascript:void(0)">Submenu</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Submenu item</li>
+        </ol>
+      </nav>
+      <!-- /Breadcrumb -->
+
+      your content here
+
+    </div>
+    <!-- /Main body -->
+
+  </div>
+  <!-- /Main -->
+
+  <!-- Search Modal -->
+  <div class="modal" id="searchModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-1 p-lg-3">
+          <form>
+            <div class="input-group input-group-lg input-group-search">
+              <div class="input-group-prepend">
+                <button class="btn btn-text-secondary btn-icon btn-lg rounded-circle" type="button" data-dismiss="modal">
+                  <i class="material-icons">chevron_left</i>
+                </button>
+              </div>
+              <input type="search" class="form-control form-control-lg border-0 shadow-none mx-1 px-0 px-lg-3" id="searchInput" placeholder="Search..." autocomplete="off" required>
+              <div class="input-group-append">
+                <button class="btn btn-text-secondary btn-icon btn-lg rounded-circle" type="submit">
+                  <i class="material-icons">search</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Search Modal -->
+
+  <!-- Backdrop for expanded sidebar -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" data-toggle="sidebar"></div>
+
+  <!-- Main Scripts -->
+  <script src="../js/script.min.js"></script>
+  <script src="../js/app.min.js"></script>
+
+  <!-- Plugins -->
+  <!-- JS plugins goes here -->
+
+</body>
+
+</html>
