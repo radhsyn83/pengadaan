@@ -5,19 +5,17 @@
 <br>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="table-main" class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nama</th>
             <th scope="col">No. Telp</th>
             <th scope="col">Alamat</th>
-            <th scope="col">Nama Bahan</th>
-            <th scope="col">Harga</th>
             <th scope="col">Aksi</th>
         </tr>
         </thead>
-        <tbody id="table-main"></tbody>
+        <tbody id="table-body"></tbody>
     </table>
 </div>
 
@@ -74,6 +72,9 @@
     </div>
 </div>
 
+
+<!-- Main Scripts -->
+
 <script>
 
     var jsonData = "";
@@ -96,8 +97,6 @@
                             '            <td scope="col">' + jsonData[i].nama + '</td>\n' +
                             '            <td scope="col">' + jsonData[i].telp + '</td>\n' +
                             '            <td scope="col">' + jsonData[i].alamat + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].bahan + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].harga + '</td>\n' +
                             '            <td scope="col">' +
                             '<div class="btn-group" role="group">\n' +
                             '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
@@ -105,9 +104,9 @@
                             '              </div></td>\n' +
                             '        </tr>'
                     }
-                    $("#table-main").html(a);
+                    $("#table-body").html(a);
                 } else if (data["error"] === 2) {
-                    $('#table-main').html('' +
+                    $('#table-body').html('' +
                         '<tr>\n' +
                         '   <td scope="col" colspan="7"><center>' + data["msg"] + '</center></td>' +
                         '</tr>')
@@ -211,5 +210,41 @@
             }
         });
     }
+
+    App.checkAll()
+
+
+    // Run datatable
+    var table = $('#table-main').DataTable({
+        drawCallback: function () {
+            $('.dataTables_paginate > .pagination').addClass('pagination-sm') // make pagination small
+        }
+    });
+    // Apply column filter
+    $('#table-main .dt-column-filter th').each(function (i) {
+        $('input', this).on('keyup change', function () {
+            if (table.column(i).search() !== this.value) {
+                table
+                    .column(i)
+                    .search(this.value)
+                    .draw()
+            }
+        })
+    });
+    // // Toggle Column filter function
+    // var responsiveFilter = function (table, index, val) {
+    //     var th = $(table).find('.dt-column-filter th').eq(index)
+    //     val === true ? th.removeClass('d-none') : th.addClass('d-none')
+    // }
+    // // Run Toggle Column filter at first
+    // $.each(table.columns().responsiveHidden(), function (index, val) {
+    //     responsiveFilter('#table-main', index, val)
+    // })
+    // // Run Toggle Column filter on responsive-resize event
+    // table.on('responsive-resize', function (e, datatable, columns) {
+    //     $.each(columns, function (index, val) {
+    //         responsiveFilter('#table-main', index, val)
+    //     })
+    // })
 
 </script>

@@ -69,4 +69,35 @@ if (isset($_GET["load"])) {
     }
     echo json_encode($res);
 
+} else if (isset($_GET["loadBySupplier"])) {
+
+    $id_supplier = $_POST["id_supplier"];
+
+    $res["error"] = 0;
+    $res["msg"] = "";
+
+    $sql = "SELECT a.*, b.nama FROM `supplier_bahan` a ";
+    $sql .= "LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
+    $sql .= "WHERE `a`.`active` = 1 AND `a`.id_supplier = $id_supplier";
+
+    if ($result = $mysql->query($sql)) {
+        if ($result->num_rows > 0) {
+            $res["msg"] = "Bahan Baku";
+            while ($row = $result->fetch_array()) {
+                $data[] = array(
+                    "id" => $row[0],
+                    "nama" => $row[6]
+                );
+            }
+
+            $res["data"] = $data;
+        } else {
+            //Username password not match
+            $res["error"] = 2;
+            $res["msg"] = "Bahan baku belum tersedia.";
+        }
+        $result->close();
+    }
+    echo json_encode($res);
+
 }

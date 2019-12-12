@@ -1,13 +1,19 @@
+
+<button type="button" class="btn btn-success has-icon" onclick="showModal('')"><i class="material-icons mr-1">add</i>
+    Tambah Bahan Masuk
+</button>
+
+<br>
+<br>
+
 <div class="row">
-    <div class="col-md-3">
-        <button type="button" class="btn btn-success has-icon" onclick="showModal('')"><i class="material-icons mr-1">add</i>
-            Tambah Bahan Masuk
-        </button>
-    </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <!-- Button date Tab -->
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-faded-success active">Apr</button>
+            <button type="button" class="btn btn-faded-success active">Jan</button>
+            <button type="button" class="btn btn-faded-success">Feb</button>
+            <button type="button" class="btn btn-faded-success">Mar</button>
+            <button type="button" class="btn btn-faded-success">Apr</button>
             <button type="button" class="btn btn-faded-success">May</button>
             <button type="button" class="btn btn-faded-success">Jun</button>
             <button type="button" class="btn btn-faded-success">Jul</button>
@@ -212,8 +218,8 @@
             $(".modal-title").html("Ubah Supplier");
             $("#modal-btn").html("Ubah");
             $("#s_id").val(jsonData[index].id);
-            $("#s_bahan select").val(jsonBahan[index].nama);
-            $("#s_supplier select").val(jsonSupplier[index].nama);
+            $("#s_bahan select").val(jsonData[index].nama);
+            $("#s_supplier select").val(jsonData[index].nama);
             $("#s_tanggal_masuk").val(jsonData[index].tanggal_masuk);
             $("#s_jumlah_masuk").val(jsonData[index].jumlah_masuk);
             $("#s_jumlah_retur").val(jsonData[index].jumlah_retur);

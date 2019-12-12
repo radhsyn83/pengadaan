@@ -28,6 +28,8 @@ if (!isset($_SESSION["id"])) {
     <link rel="stylesheet" href="plugins/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="plugins/flatpickr/plugins/monthSelect/style.css">
     <link rel="stylesheet" href="plugins/clockpicker/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="plugins/datatables/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="plugins/datatables/responsive.bootstrap4.min.css">
 
     <!-- Main Style -->
     <link rel="stylesheet" href="css/style.min.css" id="main-css">
@@ -80,19 +82,10 @@ if (!isset($_SESSION["id"])) {
         <ul class="nav nav-pills">
             <li class="nav-link-divider mx-2"></li>
             <li class="nav-item dropdown">
-                <a class="nav-link has-img dropdown-toggle px-2" href="#" data-toggle="dropdown">
+                <a class="nav-link has-img px-2" href="#">
                     <img src="img/user.svg" alt="Admin" class="rounded-circle mr-2">
                     <span class="d-none d-sm-block"><?= $_SESSION["nama"] ?></span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right font-size-sm">
-                    <a class="dropdown-item has-icon pr-5" href="javascript:void(0)"><i class="material-icons mr-2">person</i>
-                        My Profile</a>
-                    <a class="dropdown-item has-icon pr-5" href="javascript:void(0)"><i class="material-icons mr-2">settings</i>
-                        Settings</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item has-icon pr-5 text-danger" href="tml"><i class="material-icons mr-2">exit_to_app</i>
-                        Logout</a>
-                </div>
             </li>
         </ul>
     </div>
@@ -122,12 +115,15 @@ if (!isset($_SESSION["id"])) {
 <script src="plugins/flatpickr/flatpickr.min.js"></script>
 <script src="plugins/flatpickr/plugins/monthSelect/index.js"></script>
 <script src="plugins/clockpicker/bootstrap-clockpicker.min.js"></script>
+<script src="plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js"></script>
 
 <script>
     let jabatanId = "<?= $_SESSION['id_jabatan'] ?>";
 
     $(document).ready(function () {
-        if (jabatanId === "3") {
+        if (jabatanId === "2") {
+            loadPage("kepala.php");
+        } else if (jabatanId === "3") {
             loadPage("staff.php");
         }
     });
@@ -142,7 +138,7 @@ if (!isset($_SESSION["id"])) {
     }
 
     function menuOpen(identity, menu) {
-        let url = "staff/"+menu+".php";
+        let url = "page/"+menu+".php";
         $.ajax({
             url: url,
             success: function (page) {
