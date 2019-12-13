@@ -10,18 +10,19 @@
     <div class="col-md-8">
         <!-- Button date Tab -->
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-faded-success active">Jan</button>
-            <button type="button" class="btn btn-faded-success">Feb</button>
-            <button type="button" class="btn btn-faded-success">Mar</button>
-            <button type="button" class="btn btn-faded-success">Apr</button>
-            <button type="button" class="btn btn-faded-success">May</button>
-            <button type="button" class="btn btn-faded-success">Jun</button>
-            <button type="button" class="btn btn-faded-success">Jul</button>
-            <button type="button" class="btn btn-faded-success">Agu</button>
-            <button type="button" class="btn btn-faded-success">Sep</button>
-            <button type="button" class="btn btn-faded-success">Okt</button>
-            <button type="button" class="btn btn-faded-success">Nov</button>
-            <button type="button" class="btn btn-faded-success">Dec</button>
+            <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">All</button>
+            <button type="button" class="btn btn-faded-success" id="mont1" onclick="loadData('01', this)">Jan</button>
+            <button type="button" class="btn btn-faded-success" id="mont2" onclick="loadData('02', this)">Feb</button>
+            <button type="button" class="btn btn-faded-success" id="mont3" onclick="loadData('03', this)">Mar</button>
+            <button type="button" class="btn btn-faded-success" id="mont4" onclick="loadData('04', this)">Apr</button>
+            <button type="button" class="btn btn-faded-success" id="mont5" onclick="loadData('05', this)">May</button>
+            <button type="button" class="btn btn-faded-success" id="mont6" onclick="loadData('06', this)">Jun</button>
+            <button type="button" class="btn btn-faded-success" id="mont7" onclick="loadData('07', this)">Jul</button>
+            <button type="button" class="btn btn-faded-success" id="mont8" onclick="loadData('08', this)">Agu</button>
+            <button type="button" class="btn btn-faded-success" id="mont9" onclick="loadData('09', this)">Sep</button>
+            <button type="button" class="btn btn-faded-success" id="mont10" onclick="loadData('10', this)">Okt</button>
+            <button type="button" class="btn btn-faded-success" id="mont11" onclick="loadData('11', this)">Nov</button>
+            <button type="button" class="btn btn-faded-success" id="mont12" onclick="loadData('12', this)">Dec</button>
         </div>
     </div>
     <div class="col-md-2">
@@ -36,7 +37,7 @@
 <br>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="myTable" class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -120,10 +121,25 @@
     var jsonData = "";
     var jsonBahan = "";
     var jsonSupplier = "";
+    var table = $("#myTable").DataTable();
 
-    function loadData() {
+    function loadData(m="", f=null) {
+        //clear table
+        table.clear().draw();
+        removeSelected();
+
+        var y = $("#year").val();
+        var url = 'model/bahan-masuk.php?load';
+
+        if (m != "") {
+            url = 'model/bahan-masuk.php?load&filter=' + m + '/' + y;
+            $(f).addClass("active");
+        } else {
+            $("#montAll").addClass("active");
+        }
+
         $.ajax({
-            url: "model/bahan-masuk.php?load",
+            url: url,
             data: $(this).serialize(),
             dataType: "JSON",
             method: "POST",
@@ -131,24 +147,20 @@
                 console.log(data);
                 if (data["error"] === 0) {
                     jsonData = data["data"];
-                    let a = "";
                     for (let i = 0; i <jsonData.length; i++) {
-                        a += '<tr>\n' +
-                            '            <td scope="col">' + (i+1) + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].bahan + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].supplier + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].tanggal_masuk + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].jumlah_masuk + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].jumlah_retur + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].kebutuhan + '</td>\n' +
-                            '            <td scope="col">' +
-                            '<div class="btn-group" role="group">\n' +
-                            '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
-                            '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>\n' +
-                            '              </div></td>\n' +
-                            '        </tr>'
+                        table.row.add( [
+                            i+1,
+                            jsonData[i].bahan,
+                            jsonData[i].supplier,
+                            // jsonData[i].tanggal_masuk,
+                            $.format.date(jsonData[i].tanggal_masuk + " 00:00:00", "dd MMM yyyy"),
+                            jsonData[i].jumlah_masuk,
+                            jsonData[i].jumlah_retur,
+                            jsonData[i].kebutuhan,
+                            '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
+                            '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
+                        ] ).draw( false );
                     }
-                    $("#table-main").html(a);
                 } else if (data["error"] === 2) {
                     $('#table-main').html('' +
                         '<tr>\n' +
@@ -157,6 +169,22 @@
                 }
             }
         });
+    }
+
+    function removeSelected() {
+        $('#montAll').removeClass("active");
+        $('#mont1').removeClass("active");
+        $('#mont2').removeClass("active");
+        $('#mont3').removeClass("active");
+        $('#mont4').removeClass("active");
+        $('#mont5').removeClass("active");
+        $('#mont6').removeClass("active");
+        $('#mont7').removeClass("active");
+        $('#mont8').removeClass("active");
+        $('#mont9').removeClass("active");
+        $('#mont10').removeClass("active");
+        $('#mont11').removeClass("active");
+        $('#mont12').removeClass("active");
     }
 
     loadData();
@@ -218,8 +246,8 @@
             $(".modal-title").html("Ubah Supplier");
             $("#modal-btn").html("Ubah");
             $("#s_id").val(jsonData[index].id);
-            $("#s_bahan select").val(jsonData[index].nama);
-            $("#s_supplier select").val(jsonData[index].nama);
+            $("#s_bahan").val(jsonData[index].id_bahan);
+            $("#s_supplier").val(jsonData[index].id_supplier);
             $("#s_tanggal_masuk").val(jsonData[index].tanggal_masuk);
             $("#s_jumlah_masuk").val(jsonData[index].jumlah_masuk);
             $("#s_jumlah_retur").val(jsonData[index].jumlah_retur);

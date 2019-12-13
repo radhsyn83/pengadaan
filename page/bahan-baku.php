@@ -5,12 +5,12 @@
 <br>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table id="myTable" class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nama</th>
-            <th scope="col">Tanggal</th>
+            <th scope="col">Tanggal Tambah</th>
             <th scope="col">Aksi</th>
         </tr>
         </thead>
@@ -55,6 +55,7 @@
 <script>
 
     var jsonData = "";
+    var table = $("#myTable").DataTable();
 
     function loadBahanBaku() {
         $.ajax({
@@ -77,6 +78,15 @@
                             '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>\n' +
                             '              </div></td>\n' +
                             '        </tr>'
+
+                        table.row.add( [
+                            i+1,
+                            jsonData[i].nama,
+                            // jsonData[i].tanggal_masuk,
+                            $.format.date(jsonData[i].date_add + " 00:00:00", "dd MMM yyyy"),
+                            '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
+                            '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
+                        ] ).draw( false );
                     }
                     $("#table-main").html(a);
                 } else if (data["error"] === 2) {

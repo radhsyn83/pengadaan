@@ -116,6 +116,8 @@ if (!isset($_SESSION["id"])) {
 <script src="plugins/flatpickr/plugins/monthSelect/index.js"></script>
 <script src="plugins/clockpicker/bootstrap-clockpicker.min.js"></script>
 <script src="plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js"></script>
+<script src="plugins/datatables/jquery.dataTables.bootstrap4.responsive.min.js"></script>
+<script src="plugins/dateformat.min.js"></script>
 
 <script>
     let jabatanId = "<?= $_SESSION['id_jabatan'] ?>";

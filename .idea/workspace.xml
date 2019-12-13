@@ -2,19 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9238ed74-9304-45d1-b6f5-75b536245b76" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/pengadaan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/peramalan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/page/pengadaan.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/page/peramalan.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/plugins/dateformat.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rio.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rio.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kepala.php" beforeDir="false" afterPath="$PROJECT_DIR$/kepala.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bahan-baku.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-baku.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-masuk.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/supplier.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staff/bahan-baku.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-baku.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staff/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-masuk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staff/supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/supplier.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/bahan-baku.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-baku.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-masuk.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/supplier.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +38,13 @@
     <expand />
     <select />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -57,6 +61,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/page" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -65,14 +70,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plugins" />
+      <recent name="$PROJECT_DIR$/dist" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/page" />
       <recent name="$PROJECT_DIR$/model" />
       <recent name="$PROJECT_DIR$/staff" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/dist" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -102,7 +108,8 @@
       <workItem from="1575383441409" duration="11363000" />
       <workItem from="1575610901583" duration="2361000" />
       <workItem from="1576149001242" duration="1462000" />
-      <workItem from="1576151609176" duration="4016000" />
+      <workItem from="1576151609176" duration="4215000" />
+      <workItem from="1576217891382" duration="8208000" />
     </task>
     <task id="LOCAL-00001" summary="fix connection">
       <created>1575431415169</created>
@@ -111,7 +118,14 @@
       <option name="project" value="LOCAL" />
       <updated>1575431415169</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="new update">
+      <created>1576157173126</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1576157173126</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +146,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fix connection" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix connection" />
+    <MESSAGE value="new update" />
+    <option name="LAST_COMMIT_MESSAGE" value="new update" />
   </component>
 </project>

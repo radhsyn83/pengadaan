@@ -5,7 +5,7 @@
 <br>
 
 <div class="table-responsive">
-    <table id="table-main" class="table table-striped">
+    <table id="myTable" class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -50,16 +50,6 @@
                         <textarea class="form-control" id="s_alamat" name="s_alamat"
                                   placeholder="Masukkan alamat"></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="s_telp">Bahan</label>
-                        <select class="form-control" id="s_bahan" name="s_bahan"></select>
-                    </div>
-                    <div class="form-group">
-                        <label for="s_harga">Harga</label>
-                        <input type="text" class="form-control" id="s_harga" name="s_harga"
-                               placeholder="Masukkan harga bahan">
-                    </div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -72,6 +62,69 @@
     </div>
 </div>
 
+<!--Modal Supplier Bahan-->
+<div class="modal fade" id="modalSupplierBahan" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog   modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title-bahan">Supplier Bahan</h5>
+                <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button"
+                        data-dismiss="modal">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="tableBahan" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Bahan</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">Aksi</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="modalBahan('')">Tambah Bahan</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Supplier Bahan Update Add-->
+<div class="modal fade" id="modalBahan" tabindex="-1" role="dialog" aria-labelledby="basicModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-bahan-title">Supplier Bahan</h5>
+                <button class="btn btn-icon btn-sm btn-text-secondary rounded-circle" type="button"
+                        data-dismiss="modal">
+                    <i class="material-icons">close</i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <section id="section5">
+                    <form class="form-inline" id="bahan-form">
+                        <input type="hidden" id="modalSupplierId" name="modalSupplierId">
+                        <input type="hidden" id="id-supplier-bahan" name="id-supplier-bahan">
+                        <select id="bahan-select" class="form-control w-25 mr-1" id="bahan-id" name="bahan-id"></select>
+                        <input type="text" class="form-control w-25 mr-1" placeholder="Harga" id="bahan-harga" name="bahan-harga">
+                        <button type="submit" class="btn btn-primary" id="bahan-btn">Tambah Bahan</button>
+                    </form>
+                </section>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Main Scripts -->
 
@@ -79,8 +132,17 @@
 
     var jsonData = "";
     var jsonBahan = "";
+    var jsonSupplierBahan = "";
+    var dt = $("#myTable").DataTable();
+    var tbahan = $("#tableBahan").DataTable({
+        "pageLength": 5,
+        "lengthMenu": [[5, 20, 50, -1], [5, 20, 50, "All"]]
+    });
 
     function loadData() {
+        //clear table
+        dt.clear().draw();
+
         $.ajax({
             url: "model/supplier.php?load",
             data: $(this).serialize(),
@@ -90,21 +152,17 @@
                 console.log(data);
                 if (data["error"] === 0) {
                     jsonData = data["data"];
-                    let a = "";
-                    for (let i = 0; i <jsonData.length; i++) {
-                        a += '<tr>\n' +
-                            '            <td scope="col">' + (i+1) + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].nama + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].telp + '</td>\n' +
-                            '            <td scope="col">' + jsonData[i].alamat + '</td>\n' +
-                            '            <td scope="col">' +
-                            '<div class="btn-group" role="group">\n' +
-                            '                <button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
-                            '                <button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>\n' +
-                            '              </div></td>\n' +
-                            '        </tr>'
+                    for (let i = 0; i < jsonData.length; i++) {
+                        dt.row.add([
+                            i + 1,
+                            jsonData[i].nama,
+                            jsonData[i].telp,
+                            jsonData[i].alamat,
+                            '<button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="showDetail(' + i + ')"><i class="material-icons">remove_red_eye</i></button>\n' +
+                            '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
+                            '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
+                        ]).draw(false);
                     }
-                    $("#table-body").html(a);
                 } else if (data["error"] === 2) {
                     $('#table-body').html('' +
                         '<tr>\n' +
@@ -127,12 +185,14 @@
                 if (data["error"] === 0) {
                     jsonBahan = data["data"];
                     let a = "";
-                    for (let i = 0; i <jsonBahan.length; i++) {
+                    for (let i = 0; i < jsonBahan.length; i++) {
                         a += '<option value="' + jsonBahan[i].id + '">' + jsonBahan[i].nama + '</option>';
                     }
                     $("#s_bahan").html(a);
+                    $("#bahan-select").html(a);
                 } else if (data["error"] === 2) {
                     $('#s_bahan').html('<option value="">Gagal meload bahan</option>');
+                    $('#bahan-select').html('<option value="">Gagal meload bahan</option>');
                 }
             }
         });
@@ -154,10 +214,48 @@
             $("#s_nama").val(jsonData[index].nama);
             $("#s_telp").val(jsonData[index].telp);
             $("#s_alamat").val(jsonData[index].alamat);
-            $("#s_harga").val(jsonData[index].harga);
-            $("#s_bahan select").val(jsonBahan[index].bahan);
         }
         $("#myModal").modal("show");
+    }
+
+    function showDetail(index) {
+        $(".modal-title-bahan").html(jsonData[index].nama);
+        $("#modalSupplierId").val(jsonData[index].id);
+        $("#modalSupplierBahan").modal("show");
+        //clear table
+        tbahan.clear().draw();
+
+        loadSupplierBahan(jsonData[index].id);
+    }
+
+    function loadSupplierBahan(id_supplier) {
+        tbahan.clear().draw();
+        $.ajax({
+            url: "model/supplier.php?load-bahan",
+            data: {"id_supplier": id_supplier},
+            dataType: "JSON",
+            method: "POST",
+            success: function (data) {
+                console.log(data);
+                if (data["error"] === 0) {
+                    jsonSupplierBahan = data["data"];
+                    for (let i = 0; i < jsonSupplierBahan.length; i++) {
+                        tbahan.row.add([
+                            i + 1,
+                            jsonSupplierBahan[i].bahan,
+                            jsonSupplierBahan[i].harga,
+                            '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="modalBahan(' + i + ')"><i class="material-icons">edit</i></button>\n' +
+                            '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapusBahan(' + i + ')"><i class="material-icons">delete</i></button>'
+                        ]).draw(false);
+                    }
+                } else if (data["error"] === 2) {
+                    $('#tableBahan').html('' +
+                        '<tr>\n' +
+                        '   <td scope="col" colspan="4"><center>' + data["msg"] + '</center></td>' +
+                        '</tr>')
+                }
+            }
+        });
     }
 
     $("#modal-form").on("submit", function (e) {
@@ -180,6 +278,27 @@
         });
     });
 
+    $("#bahan-form").on("submit", function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: "model/supplier.php?bahan-add-update",
+            data: $(this).serialize(),
+            dataType: "JSON",
+            method: "POST",
+            beforeSend: function () {
+                $("#bahan-btn").prop("disabled", true);
+            },
+            success: function (data) {
+                if (data["error"] === 0) {
+                    $("#myModal").modal("hide");
+                    loadSupplierBahan($("#modalSupplierId").val());
+                    $("#modalBahan").modal('hide');
+                }
+            }
+        });
+    });
+
     function showNotif(d) {
         if (d["error"] === 0) {
             new Noty({
@@ -196,10 +315,27 @@
         }
     }
 
+    function modalBahan(index) {
+        $("#bahan-btn").prop("disabled", false);
+
+        if (index === "") {
+            $(".modal-bahan-title").html("Tambah Bahan");
+            $("#bahan-btn").html("Tambah");
+            $("#bahan-form").trigger("reset");
+        } else {
+            $(".modal-title").html("Ubah Bahan");
+            $("#bahan-btn").html("Ubah");
+            $("#id-supplier-bahan").val(jsonSupplierBahan[index].id);
+            $("#bahan-harga").val(jsonSupplierBahan[index].harga);
+            $("#bahan-select").val(jsonSupplierBahan[index].id_bahan);
+        }
+        $("#modalBahan").modal('show');
+    }
+
     function hapus(index) {
         $.ajax({
             url: "model/supplier.php?hapus",
-            data: {"id" : jsonData[index].id},
+            data: {"id": jsonData[index].id},
             dataType: "JSON",
             method: "POST",
             success: function (data) {
@@ -211,40 +347,20 @@
         });
     }
 
-    App.checkAll()
-
-
-    // Run datatable
-    var table = $('#table-main').DataTable({
-        drawCallback: function () {
-            $('.dataTables_paginate > .pagination').addClass('pagination-sm') // make pagination small
-        }
-    });
-    // Apply column filter
-    $('#table-main .dt-column-filter th').each(function (i) {
-        $('input', this).on('keyup change', function () {
-            if (table.column(i).search() !== this.value) {
-                table
-                    .column(i)
-                    .search(this.value)
-                    .draw()
+    function hapusBahan(index) {
+        $.ajax({
+            url: "model/supplier.php?hapus-bahan",
+            data: {"id": jsonSupplierBahan[index].id},
+            dataType: "JSON",
+            method: "POST",
+            success: function (data) {
+                showNotif(data);
+                if (data["error"] === 0) {
+                    loadSupplierBahan($("#modalSupplierId").val())
+                }
             }
-        })
-    });
-    // // Toggle Column filter function
-    // var responsiveFilter = function (table, index, val) {
-    //     var th = $(table).find('.dt-column-filter th').eq(index)
-    //     val === true ? th.removeClass('d-none') : th.addClass('d-none')
-    // }
-    // // Run Toggle Column filter at first
-    // $.each(table.columns().responsiveHidden(), function (index, val) {
-    //     responsiveFilter('#table-main', index, val)
-    // })
-    // // Run Toggle Column filter on responsive-resize event
-    // table.on('responsive-resize', function (e, datatable, columns) {
-    //     $.each(columns, function (index, val) {
-    //         responsiveFilter('#table-main', index, val)
-    //     })
-    // })
+        });
+    }
 
+    App.checkAll()
 </script>
