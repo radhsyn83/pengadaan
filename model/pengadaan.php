@@ -10,7 +10,12 @@ if (isset($_GET["load"])) {
 LEFT JOIN supplier_bahan b ON a.id_supplier_bahan = b.id
 LEFT JOIN bahan c ON b.id_bahan = c.id
 LEFT JOIN supplier d ON b.id_supplier = d.id
-WHERE a.active = 1 AND b.active = 1;";
+WHERE a.active = 1 AND b.active = 1 ";
+
+    if (isset($_GET['filter'])) {
+        $filter = $_GET['filter'];
+        $sql .= "AND DATE_FORMAT(`a`.`tanggal_pengadaan`, '%m/%Y') = '$filter'";
+    }
 
     if ($result = $mysql->query($sql)) {
         if ($result->num_rows > 0) {

@@ -10,6 +10,11 @@ if (isset($_GET["load"])) {
     $sql .= "LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= "LEFT JOIN `supplier` c ON a.id_supplier = c.id ";
 
+    if (isset($_GET['filter'])) {
+        $filter = $_GET['filter'];
+        $sql .= "AND DATE_FORMAT(`a`.`tanggal_masuk`, '%m/%Y') = '$filter'";
+    }
+
     if ($result = $mysql->query($sql)) {
         if ($result->num_rows > 0) {
             $res["msg"] = "Peramalan";

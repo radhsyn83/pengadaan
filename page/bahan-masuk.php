@@ -47,6 +47,9 @@
             <th scope="col">Jumlah Masuk</th>
             <th scope="col">Jumlah Retur</th>
             <th scope="col">Kebutuhan</th>
+            <th scope="col">BHarga</th>
+            <th scope="col">BWaktu</th>
+            <th scope="col">BRetur</th>
             <th scope="col">Aksi</th>
         </tr>
         </thead>
@@ -104,6 +107,25 @@
                                placeholder="Kebutuhan barang">
                     </div>
 
+                    <div class="form-group">
+                        <label for="b_harga">Bobot Harga</label>
+                        <input type="text" class="form-control" id="b_harga" name="b_harga"
+                               placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_waktu">Bobot Waktu</label>
+                        <input type="text" class="form-control" id="b_waktu" name="b_waktu"
+                               placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_retur">Bobot Retur</label>
+                        <input type="text" class="form-control" id="b_retur" name="b_retur"
+                               placeholder="0">
+                    </div>
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -157,6 +179,9 @@
                             jsonData[i].jumlah_masuk,
                             jsonData[i].jumlah_retur,
                             jsonData[i].kebutuhan,
+                            jsonData[i].bobot_harga,
+                            jsonData[i].bobot_waktu,
+                            jsonData[i].bobot_retur,
                             '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
                             '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
                         ] ).draw( false );
@@ -239,11 +264,11 @@
         $("#modal-btn").prop("disabled", false);
 
         if (index === "") {
-            $(".modal-title").html("Tambah Supplier");
+            $(".modal-title").html("Tambah Bahan Masuk");
             $("#modal-btn").html("Tambah");
             $("#modal-form").trigger("reset");
         } else {
-            $(".modal-title").html("Ubah Supplier");
+            $(".modal-title").html("Ubah Bahan Masuk");
             $("#modal-btn").html("Ubah");
             $("#s_id").val(jsonData[index].id);
             $("#s_bahan").val(jsonData[index].id_bahan);

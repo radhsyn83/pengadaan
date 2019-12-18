@@ -28,9 +28,12 @@ if (isset($_GET["load"])) {
                     "jumlah_masuk" => $row[4],
                     "kebutuhan" => $row[5],
                     "tanggal_masuk" => $row[6],
-                    "date_add" => $row[7],
-                    "bahan" => $row[9],
-                    "supplier" => $row[10],
+                    "bobot_retur" => $row[7],
+                    "bobot_waktu" => $row[8],
+                    "bobot_harga" => $row[9],
+                    "date_add" => $row[10],
+                    "bahan" => $row[12],
+                    "supplier" => $row[13],
                 );
             }
 
@@ -53,6 +56,9 @@ if (isset($_GET["load"])) {
     $jumlah_masuk = $_POST["s_jumlah_masuk"];
     $jumlah_retur = $_POST["s_jumlah_retur"];
     $kebutuhan = $_POST["s_kebutuhan"];
+    $bHarga = $_POST["b_harga"];
+    $bWaktu = $_POST["b_waktu"];
+    $bRetur = $_POST["b_retur"];
 
     $res["error"] = 0;
     $res["msg"] = "";
@@ -60,12 +66,12 @@ if (isset($_GET["load"])) {
     $sql = "";
 
     if ($id == "") {
-        $sql = "INSERT INTO `bahan_masuk` (`id_supplier`, `id_bahan`, `jumlah_retur`, `jumlah_masuk`, `kebutuhan`, `tanggal_masuk`) ";
-        $sql .= "VALUES ('$supplier','$bahan','$jumlah_retur','$jumlah_masuk','$kebutuhan','$tanggal_masuk')";
+        $sql = "INSERT INTO `bahan_masuk` (`id_supplier`, `id_bahan`, `jumlah_retur`, `jumlah_masuk`, `kebutuhan`, `tanggal_masuk`, `bobot_harga`, `bobot_waktu`, `bobot_retur`) ";
+        $sql .= "VALUES ('$supplier','$bahan','$jumlah_retur','$jumlah_masuk','$kebutuhan','$tanggal_masuk','$bHarga','$bWaktu','$bRetur')";
         $res["msg"] = "Bahan masuk berhasil ditambahkan.";
 
     } else {
-        $sql = "UPDATE `bahan_masuk` SET `id_supplier`='$supplier', `id_bahan`='$bahan',`jumlah_retur`='$jumlah_retur', `jumlah_masuk`='$jumlah_masuk', `kebutuhan`='$kebutuhan', `tanggal_masuk`='$tanggal_masuk' WHERE `id` = '$id'";
+        $sql = "UPDATE `bahan_masuk` SET `id_supplier`='$supplier', `id_bahan`='$bahan',`jumlah_retur`='$jumlah_retur', `jumlah_masuk`='$jumlah_masuk', `kebutuhan`='$kebutuhan', `tanggal_masuk`='$tanggal_masuk', `bobot_harga`='$bHarga', `bobot_waktu`='$bWaktu', `bobot_retur`='$bRetur' WHERE `id` = '$id'";
         $res["msg"] = "Bahan masuk  berhasil diubah.";
     }
 
