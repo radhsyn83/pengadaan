@@ -81,6 +81,9 @@
                         <th scope="col">#</th>
                         <th scope="col">Nama Bahan</th>
                         <th scope="col">Harga</th>
+                        <th scope="col">BHarga</th>
+                        <th scope="col">BWaktu</th>
+                        <th scope="col">BRetur</th>
                         <th scope="col">Aksi</th>
                     </tr>
                     </thead>
@@ -107,20 +110,46 @@
                     <i class="material-icons">close</i>
                 </button>
             </div>
-            <div class="modal-body">
-                <section id="section5">
-                    <form class="form-inline" id="bahan-form">
+            <form id="bahan-form">
+
+                <div class="modal-body">
+                    <div class="form-group">
                         <input type="hidden" id="modalSupplierId" name="modalSupplierId">
                         <input type="hidden" id="id-supplier-bahan" name="id-supplier-bahan">
-                        <select id="bahan-select" class="form-control w-25 mr-1" id="bahan-id" name="bahan-id"></select>
-                        <input type="text" class="form-control w-25 mr-1" placeholder="Harga" id="bahan-harga" name="bahan-harga">
-                        <button type="submit" class="btn btn-primary" id="bahan-btn">Tambah Bahan</button>
-                    </form>
-                </section>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-            </div>
+                        <label for="b_harga">Pilih Bahan</label>
+                        <select id="bahan-select" class="form-control" id="bahan-id" name="bahan-id"></select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_harga">Harga</label>
+                        <input type="text" class="form-control" placeholder="Harga" id="bahan-harga" name="bahan-harga">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_harga">Bobot Harga</label>
+                        <input type="text" class="form-control" id="b_harga" name="b_harga"
+                               placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_waktu">Bobot Waktu</label>
+                        <input type="text" class="form-control" id="b_waktu" name="b_waktu"
+                               placeholder="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_retur">Bobot Retur</label>
+                        <input type="text" class="form-control" id="b_retur" name="b_retur"
+                               placeholder="0">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="bahan-btn">Tambah Bahan</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
@@ -244,6 +273,9 @@
                             i + 1,
                             jsonSupplierBahan[i].bahan,
                             jsonSupplierBahan[i].harga,
+                            jsonSupplierBahan[i].bobot_harga,
+                            jsonSupplierBahan[i].bobot_waktu,
+                            jsonSupplierBahan[i].bobot_retur,
                             '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="modalBahan(' + i + ')"><i class="material-icons">edit</i></button>\n' +
                             '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapusBahan(' + i + ')"><i class="material-icons">delete</i></button>'
                         ]).draw(false);
@@ -328,6 +360,9 @@
             $("#id-supplier-bahan").val(jsonSupplierBahan[index].id);
             $("#bahan-harga").val(jsonSupplierBahan[index].harga);
             $("#bahan-select").val(jsonSupplierBahan[index].id_bahan);
+            $("#b_harga").val(jsonSupplierBahan[index].bobot_harga);
+            $("#b_waktu").val(jsonSupplierBahan[index].bobot_waktu);
+            $("#b_retur").val(jsonSupplierBahan[index].bobot_retur);
         }
         $("#modalBahan").modal('show');
     }

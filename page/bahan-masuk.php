@@ -47,9 +47,6 @@
             <th scope="col">Jumlah Masuk</th>
             <th scope="col">Jumlah Retur</th>
             <th scope="col">Kebutuhan</th>
-            <th scope="col">BHarga</th>
-            <th scope="col">BWaktu</th>
-            <th scope="col">BRetur</th>
             <th scope="col">Aksi</th>
         </tr>
         </thead>
@@ -75,7 +72,7 @@
                     <input type="hidden" class="form-control" id="s_id" name="s_id">
                     <div class="form-group">
                         <label for="s_bahan">Bahan</label>
-                        <select class="form-control" id="s_bahan" name="s_bahan"></select>
+                        <select class="form-control" id="s_bahan" name="s_bahan" onchange="loadSupplier(this.value)"></select>
                     </div>
                     <div class="form-group">
                         <label for="s_supplier">Supplier</label>
@@ -106,34 +103,12 @@
                         <input type="text" class="form-control" id="s_kebutuhan" name="s_kebutuhan"
                                placeholder="Kebutuhan barang">
                     </div>
-
-                    <div class="form-group">
-                        <label for="b_harga">Bobot Harga</label>
-                        <input type="text" class="form-control" id="b_harga" name="b_harga"
-                               placeholder="0">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="b_waktu">Bobot Waktu</label>
-                        <input type="text" class="form-control" id="b_waktu" name="b_waktu"
-                               placeholder="0">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="b_retur">Bobot Retur</label>
-                        <input type="text" class="form-control" id="b_retur" name="b_retur"
-                               placeholder="0">
-                    </div>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" id="modal-btn">Tambah Bahan Masuk</button>
                 </div>
             </form>
-
-
         </div>
     </div>
 </div>
@@ -174,14 +149,10 @@
                             i+1,
                             jsonData[i].bahan,
                             jsonData[i].supplier,
-                            // jsonData[i].tanggal_masuk,
                             $.format.date(jsonData[i].tanggal_masuk + " 00:00:00", "dd MMM yyyy"),
                             jsonData[i].jumlah_masuk,
                             jsonData[i].jumlah_retur,
                             jsonData[i].kebutuhan,
-                            jsonData[i].bobot_harga,
-                            jsonData[i].bobot_waktu,
-                            jsonData[i].bobot_retur,
                             '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
                             '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
                         ] ).draw( false );
@@ -191,6 +162,30 @@
                         '<tr>\n' +
                         '   <td scope="col" colspan="8"><center>' + data["msg"] + '</center></td>' +
                         '</tr>')
+                }
+            }
+        });
+    }
+
+    function loadSupplier(v) {
+        $.ajax({
+            url: "model/supplier.php?loadByBahan",
+            data: {"id_bahan": v},
+            dataType: "JSON",
+            method: "POST",
+            beforeSend: function () {
+                $('#s_supplier').html('<option value="">Loading....</option>');
+            },
+            success: function (data) {
+                if (data["error"] === 0) {
+                    d = data["data"];
+                    let a = "";
+                    for (let i = 0; i < d.length; i++) {
+                        a += '<option value="' + d[i].id + '">' + d[i].nama + '</option>';
+                    }
+                    $("#s_supplier").html(a);
+                } else if (data["error"] === 2) {
+                    $('#s_supplier').html('<option value="">Gagal meload bahan</option>');
                 }
             }
         });
@@ -236,29 +231,6 @@
     }
 
     loadBahanBaku();
-
-    function loadSupplier() {
-        $.ajax({
-            url: "model/supplier.php?load",
-            data: $(this).serialize(),
-            dataType: "JSON",
-            method: "POST",
-            success: function (data) {
-                if (data["error"] === 0) {
-                    jsonSupplier = data["data"];
-                    let a = "";
-                    for (let i = 0; i <jsonSupplier.length; i++) {
-                        a += '<option value="' + jsonSupplier[i].id + '">' + jsonSupplier[i].nama + '</option>';
-                    }
-                    $("#s_supplier").html(a);
-                } else if (data["error"] === 2) {
-                    $('#s_supplier').html('<option value="">Gagal meload Supplier</option>');
-                }
-            }
-        });
-    }
-
-    loadSupplier();
 
     function showModal(index) {
         $("#modal-btn").prop("disabled", false);

@@ -99,7 +99,10 @@ if (isset($_GET["load"])) {
                     "id_supplier" => $row[1],
                     "id_bahan" => $row[2],
                     "harga" => $row[3],
-                    "bahan" => $row[6],
+                    "bobot_harga" => $row[4],
+                    "bobot_waktu" => $row[5],
+                    "bobot_retur" => $row[6],
+                    "bahan" => $row[9],
                 );
             }
 
@@ -119,6 +122,9 @@ if (isset($_GET["load"])) {
     $id_supplier = $_POST["modalSupplierId"];
     $id_bahan = $_POST["bahan-id"];
     $harga = $_POST["bahan-harga"];
+    $bHarga = $_POST["b_harga"];
+    $bWaktu = $_POST["b_waktu"];
+    $bRetur = $_POST["b_retur"];
 
     $res["error"] = 0;
     $res["msg"] = "";
@@ -126,12 +132,12 @@ if (isset($_GET["load"])) {
     $sql = "";
 
     if ($id == "") {
-        $sql = "INSERT INTO `supplier_bahan` (`id_supplier`, `id_bahan`, `harga`, `active`) ";
-        $sql .= "VALUES ('$id_supplier','$id_bahan','$harga', '1')";
+        $sql = "INSERT INTO `supplier_bahan` (`id_supplier`, `id_bahan`, `harga`, `active`, `bobot_harga`, `bobot_waktu`, `bobot_retur`) ";
+        $sql .= "VALUES ('$id_supplier','$id_bahan','$harga', '1','$bHarga','$bWaktu','$bRetur')";
         $res["msg"] = "Supplier bahan berhasil ditambahkan.";
 
     } else {
-        $sql = "UPDATE `supplier_bahan` SET `id_supplier`='$id_supplier', `id_bahan`='$id_bahan',`harga`='$harga' WHERE `id` = '$id'";
+        $sql = "UPDATE `supplier_bahan` SET `id_supplier`='$id_supplier', `id_bahan`='$id_bahan',`harga`='$harga', `bobot_harga`='$bHarga', `bobot_waktu`='$bWaktu', `bobot_retur`='$bRetur' WHERE `id` = '$id'";
         $res["msg"] = "Supplier bahan berhasil diubah.";
     }
 
@@ -157,6 +163,37 @@ if (isset($_GET["load"])) {
     } else {
         $res["error"] = 1;
         $res["msg"] = $mysql->error;
+    }
+    echo json_encode($res);
+
+} else if (isset($_GET["loadByBahan"])) {
+
+    $id_bahan = $_POST["id_bahan"];
+
+    $res["error"] = 0;
+    $res["msg"] = "";
+
+    $sql = "SELECT a.*, b.nama FROM `supplier_bahan` a ";
+    $sql .= "LEFT JOIN `supplier` b ON a.id_supplier = b.id ";
+    $sql .= "WHERE `a`.`active` = 1 AND `a`.id_bahan = $id_bahan";
+
+    if ($result = $mysql->query($sql)) {
+        if ($result->num_rows > 0) {
+            $res["msg"] = "Supplier";
+            while ($row = $result->fetch_array()) {
+                $data[] = array(
+                    "id" => $row[0],
+                    "nama" => $row[9]
+                );
+            }
+
+            $res["data"] = $data;
+        } else {
+            //Username password not match
+            $res["error"] = 2;
+            $res["msg"] = "Bahan baku belum tersedia.";
+        }
+        $result->close();
     }
     echo json_encode($res);
 

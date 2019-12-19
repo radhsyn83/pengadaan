@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="9238ed74-9304-45d1-b6f5-75b536245b76" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-masuk.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/supplier.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-masuk.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/supplier.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/supplier.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -103,6 +107,7 @@
       <workItem from="1576217891382" duration="8949000" />
       <workItem from="1576496889824" duration="1091000" />
       <workItem from="1576660609150" duration="1627000" />
+      <workItem from="1576734242146" duration="3281000" />
     </task>
     <task id="LOCAL-00001" summary="fix connection">
       <created>1575431415169</created>
@@ -132,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1576664117790</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="new update">
+      <created>1576734266218</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1576734266218</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
