@@ -60,7 +60,7 @@
                 <th scope="col">Nama Bahan</th>
                 <th scope="col">Nama Supplier</th>
                 <th scope="col">Tanggal Pengadaan</th>
-                <th scope="col">Jumlah</th>
+                <th scope="col">Jumlah Pembelian</th>
                 <th scope="col">Harga</th>
                 <th scope="col">Aksi</th>
             </tr>

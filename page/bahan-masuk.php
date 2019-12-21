@@ -215,6 +215,9 @@
             data: $(this).serialize(),
             dataType: "JSON",
             method: "POST",
+            beforeSend: function () {
+                $('#s_bahan').html('<option value="">Loading....</option>');
+            },
             success: function (data) {
                 if (data["error"] === 0) {
                     jsonBahan = data["data"];
@@ -223,6 +226,7 @@
                         a += '<option value="' + jsonBahan[i].id + '">' + jsonBahan[i].nama + '</option>';
                     }
                     $("#s_bahan").html(a);
+                    loadSupplier(jsonBahan[0].id);
                 } else if (data["error"] === 2) {
                     $('#s_bahan').html('<option value="">Gagal meload bahan</option>');
                 }
@@ -230,10 +234,9 @@
         });
     }
 
-    loadBahanBaku();
-
     function showModal(index) {
         $("#modal-btn").prop("disabled", false);
+        loadBahanBaku()
 
         if (index === "") {
             $(".modal-title").html("Tambah Bahan Masuk");

@@ -86,7 +86,7 @@ if (isset($_GET["load"])) {
             while ($row = $result->fetch_array()) {
                 $data[] = array(
                     "id" => $row[0],
-                    "nama" => $row[6]
+                    "nama" => $row[9]
                 );
             }
 

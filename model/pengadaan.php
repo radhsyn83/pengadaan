@@ -23,11 +23,11 @@ WHERE a.active = 1 AND b.active = 1 ";
             while ($row = $result->fetch_array()) {
                 $data[] = array(
                     "id" => $row[0],
-                    "bahan" => $row[8],
-                    "supplier" => $row[9],
-                    "harga" => $row[7],
-                    "jumlah" => $row[4],
-                    "tanggal_pengadaan" => $row[3]
+                    "bahan" => $row[7],
+                    "supplier" => $row[8],
+                    "harga" => $row[6],
+                    "jumlah" => $row[3],
+                    "tanggal_pengadaan" => $row[2]
                 );
             }
 
