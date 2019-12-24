@@ -122,6 +122,18 @@ if (!isset($_SESSION["id"])) {
 <script>
     let jabatanId = "<?= $_SESSION['id_jabatan'] ?>";
 
+    $("#loadingBox").on("click", function (e) {
+
+        let dialog = bootbox.dialog({
+            message: `<div class="d-flex align-items-center">
+                      <div class="spinner-border spinner-border-sm mr-2"></div> Mohon menunggu...
+                    </div>`
+        });
+        setTimeout(() => {
+            dialog.modal('hide')
+        }, 2000)
+    });
+
     $(document).ready(function () {
         if (jabatanId === "2") {
             loadPage("kepala.php");

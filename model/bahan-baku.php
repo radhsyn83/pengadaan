@@ -76,7 +76,7 @@ if (isset($_GET["load"])) {
     $res["error"] = 0;
     $res["msg"] = "";
 
-    $sql = "SELECT a.*, b.nama FROM `supplier_bahan` a ";
+    $sql = "SELECT a.*, b.nama, b.id as id_bahan FROM `supplier_bahan` a ";
     $sql .= "LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= "WHERE `a`.`active` = 1 AND `a`.id_supplier = $id_supplier";
 
@@ -86,7 +86,8 @@ if (isset($_GET["load"])) {
             while ($row = $result->fetch_array()) {
                 $data[] = array(
                     "id" => $row[0],
-                    "nama" => $row[9]
+                    "nama" => $row[9],
+                    "id_bahan" => $row["id_bahan"]
                 );
             }
 

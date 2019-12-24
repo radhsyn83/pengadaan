@@ -45,8 +45,8 @@
     <div class="col-md-2">
         <div class="form-group">
             <select class="form-control" id="year" name="year">
-                <option value="2018" selected>2018</option>
-                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2019" selected>2019</option>
             </select>
         </div>
     </div>
@@ -93,14 +93,14 @@
                         </div>
                         <div class="form-group">
                             <label for="s_supplier_bahan">Nama Bahan</label>
-                            <select class="form-control" id="s_supplier_bahan" name="s_supplier_bahan"></select>
+                            <select class="form-control" id="s_supplier_bahan" onchange="getPeramalan()" name="s_supplier_bahan"></select>
                         </div>
                         <div class="form-group">
                             <label for="s_tanggal_pengadaan">Tanggal Pengadaan</label>
                             <div class="input-group datepicker-wrap">
                                 <input type="text" class="form-control flatpickr-input" id="s_tanggal_pengadaan"
                                        name="s_tanggal_pengadaan" placeholder="Tanggal Pengadaan" autocomplete="off"
-                                       data-input="" readonly>
+                                       data-input="" onchange="getPeramalan()" readonly>
                                 <div class="input-group-append">
                                     <button class="btn btn-light btn-icon" type="button" title="Choose date"
                                             data-toggle><i class="material-icons">calendar_today</i></button>
@@ -129,6 +129,7 @@
 
         var jsonData = "";
         var table = $("#myTable").DataTable();
+        var selectedIdBahan = "";
 
         function loadData(m="", f=null) {
             //clear table
@@ -194,6 +195,35 @@
             $('#mont12').removeClass("active");
         }
 
+        function getPeramalan() {
+
+            var bahan = $("#s_supplier_bahan").val();
+            var tgl = $("#s_tanggal_pengadaan").val();
+
+            if (bahan !== "" && tgl !== "") {
+                $.ajax({
+                    url: "model/peramalan.php?loadBahanSisa",
+                    data: {"tanggal": tgl, "bahan": bahan},
+                    dataType: "JSON",
+                    method: "POST",
+                    beforeSend: function () {
+                    },
+                    success: function (data) {
+                        if (data["error"] === 0) {
+                            $("#s_jumlah").val(Math.floor(data["data"]));
+                        } else if (data["error"] === 2) {
+                            $('#s_supplier_bahan').html('<option value="">Gagal meload bahan</option>');
+                        }
+                    }
+                });
+            }
+
+        }
+
+        function supplierBahanChange() {
+            console.log("ea");
+        }
+
         function loadBahan(v) {
             $.ajax({
                 url: "model/bahan-baku.php?loadBySupplier",
@@ -208,9 +238,10 @@
                         d = data["data"];
                         let a = "";
                         for (let i = 0; i < d.length; i++) {
-                            a += '<option value="' + d[i].id + '">' + d[i].nama + '</option>';
+                            a += '<option value="' + d[i].id + '#' + d[i].id_bahan + '">' + d[i].nama + '</option>';
                         }
                         $("#s_supplier_bahan").html(a);
+                        getPeramalan()
                     } else if (data["error"] === 2) {
                         $('#s_supplier_bahan').html('<option value="">Gagal meload bahan</option>');
                     }
@@ -235,8 +266,7 @@
                             a += '<option value="' + s[i].id + '">' + s[i].nama + '</option>';
                         }
                         $("#s_supplier").html(a);
-
-                        loadBahan(s[0].id)
+                        loadBahan(s[0].id);
                     } else if (data["error"] === 2) {
                         $('#s_supplier').html('<option value="">Gagal meload Supplier</option>');
                     }
