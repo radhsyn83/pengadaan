@@ -99,6 +99,8 @@ if (isset($_GET["load"])) {
 
 } else if (isset($_GET["generate"])) {
 
+    $addSisa = false;
+
     $res["error"] = 0;
     $res["msg"] = "";
 
@@ -106,6 +108,10 @@ if (isset($_GET["load"])) {
     $y = $_GET['tahun'];
     $m = $_GET['bulan'];
     $dateEnd = $y . "-" . $m . "-31";
+
+    if (strtotime($dateEnd) > strtotime("2019-07-01")) {
+        $addSisa = true;
+    }
 
     //Get StartDate
     $dateToDiff = "1" . "-" . $m . "-" . $y;
@@ -119,7 +125,6 @@ if (isset($_GET["load"])) {
     $dateToDiff = DateTime::createFromFormat('d-m-Y', $formatDateToDiff)->format('Y-m-d');
     $dateEnd = date('Y-m', strtotime('-1 months', strtotime($dateToDiff)));
     $dateEnd = $dateEnd . "-31";
-
     //Start transaction
     $mysql->begin_transaction();
 
@@ -145,16 +150,20 @@ if (isset($_GET["load"])) {
                             $sisa = 0;
                             $avg = floatval($rowRata["rata_rata"]);
 
-                            //Set sisa
-                            if (floatval($rowRata["sisa"]) > 0) {
-                                $sisa = floatval($rowRata["sisa"]);
-                            }
-                            //Set Avg
-                            if ($sisa > 0) {
-                                if ($sisa > $avg) {
-                                    $avg = $sisa - $avg;
-                                } else {
-                                    $avg = $avg - $sisa;
+                            if ($addSisa) {
+                                //Set sisa
+
+                                if (floatval($rowRata["sisa"]) > 0) {
+                                    $sisa = floatval($rowRata["sisa"]);
+                                }
+
+                                //Set Avg
+                                if ($sisa > 0) {
+                                    if ($sisa > $avg) {
+                                        $avg = $sisa - $avg;
+                                    } else {
+                                        $avg = $avg - $sisa;
+                                    }
                                 }
                             }
 
