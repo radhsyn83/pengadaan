@@ -108,10 +108,10 @@ if (isset($_GET["load"])) {
     $y = $_GET['tahun'];
     $m = $_GET['bulan'];
     $dateEnd = $y . "-" . $m . "-31";
-
-    if (strtotime($dateEnd) > strtotime("2019-07-01")) {
-        $addSisa = true;
-    }
+//
+//    if (strtotime($dateEnd) > strtotime("2019-07-01")) {
+//        $addSisa = true;
+//    }
 
     //Get StartDate
     $dateToDiff = "1" . "-" . $m . "-" . $y;
