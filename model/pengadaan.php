@@ -6,7 +6,7 @@ if (isset($_GET["load"])) {
     $res["error"] = 0;
     $res["msg"] = "";
 
-    $sql = "SELECT a.*, b.harga, c.nama as bahan, d.nama as supplier FROM `pengadaan` a 
+    $sql = "SELECT a.*, (b.harga*a.jumlah) as harga, c.nama as bahan, d.nama as supplier FROM `pengadaan` a 
 LEFT JOIN supplier_bahan b ON a.id_supplier_bahan = b.id
 LEFT JOIN bahan c ON b.id_bahan = c.id
 LEFT JOIN supplier d ON b.id_supplier = d.id
@@ -25,7 +25,7 @@ WHERE a.active = 1 AND b.active = 1 ";
                     "id" => $row[0],
                     "bahan" => $row[7],
                     "supplier" => $row[8],
-                    "harga" => $row[6],
+                    "harga" => number_format($row[6]),
                     "jumlah" => $row[3],
                     "tanggal_pengadaan" => $row[2]
                 );

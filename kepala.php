@@ -1,6 +1,6 @@
 <!-- Button Tab -->
 <div class="btn-group" role="group">
-    <button type="button" id="tab-peramalan" class="btn btn-light active">Peramalan</button>
+    <button type="button" id="tab-peramalan" class="btn btn-light active">Perencanaan</button>
     <button type="button" id="tab-pengadaan" class="btn btn-light">Pengadaan</button>
 </div>
 

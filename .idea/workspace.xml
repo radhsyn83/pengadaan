@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9238ed74-9304-45d1-b6f5-75b536245b76" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/model/bahan-keluar.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/page/bahan-keluar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/peramalan.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/peramalan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kepala.php" beforeDir="false" afterPath="$PROJECT_DIR$/kepala.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/manager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-masuk.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/pengadaan.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/pengadaan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-masuk.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/pengadaan.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/pengadaan.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,15 +70,15 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/plugins" />
-      <recent name="$PROJECT_DIR$/dist" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/page" />
       <recent name="$PROJECT_DIR$/model" />
       <recent name="$PROJECT_DIR$/staff" />
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/plugins" />
+      <recent name="$PROJECT_DIR$/dist" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -111,7 +119,8 @@
       <workItem from="1577102080254" duration="3717000" />
       <workItem from="1577157808108" duration="1619000" />
       <workItem from="1577319829128" duration="1029000" />
-      <workItem from="1577341083082" duration="446000" />
+      <workItem from="1577341083082" duration="1138000" />
+      <workItem from="1579521380021" duration="4901000" />
     </task>
     <task id="LOCAL-00001" summary="fix connection">
       <created>1575431415169</created>
@@ -176,7 +185,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577320785558</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="new update">
+      <created>1577346448968</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1577346448969</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

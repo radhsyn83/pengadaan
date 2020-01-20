@@ -1,6 +1,6 @@
 
 <button type="button" class="btn btn-success has-icon" onclick="showModal('')"><i class="material-icons mr-1">add</i>
-    Tambah Bahan Masuk
+    Tambah Bahan Keluar
 </button>
 
 <br>
@@ -10,7 +10,6 @@
     <div class="col-md-8">
         <!-- Button date Tab -->
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">All</button>
             <button type="button" class="btn btn-faded-success" id="mont1" onclick="loadData('01', this)">Jan</button>
             <button type="button" class="btn btn-faded-success" id="mont2" onclick="loadData('02', this)">Feb</button>
             <button type="button" class="btn btn-faded-success" id="mont3" onclick="loadData('03', this)">Mar</button>
@@ -42,12 +41,10 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Bahan</th>
-            <th scope="col">Supplier</th>
-            <th scope="col">Tanggal Datang</th>
-            <th scope="col">Bahan Datang</th>
-            <th scope="col">Retur</th>
-            <th scope="col">Bahan Masuk</th>
-            <th scope="col">Total Harga</th>
+            <th scope="col">Bahan Produksi</th>
+            <th scope="col">Bahan Rusak</th>
+            <th scope="col">Stok</th>
+            <th scope="col">Tanggal</th>
             <th scope="col">Aksi</th>
         </tr>
         </thead>
@@ -76,33 +73,29 @@
                         <select class="form-control" id="s_bahan" name="s_bahan" onchange="loadSupplier(this.value)"></select>
                     </div>
                     <div class="form-group">
-                        <label for="s_supplier">Supplier</label>
-                        <select class="form-control" id="s_supplier" name="s_supplier"></select>
+                        <label for="s_jumlah_produksi">Jumlah Bahan Produksi</label>
+                        <input type="text" class="form-control" id="s_jumlah_produksi" name="s_jumlah_produksi"
+                               placeholder="Jumlah bahan produksi">
                     </div>
                     <div class="form-group">
-                        <label for="s_supplier">Tanggal Masuk</label>
+                        <label for="s_jumlah_rusak">Jumlah Bahan Rusak</label>
+                        <input type="text" class="form-control" id="s_jumlah_rusak" name="s_jumlah_rusak"
+                               placeholder="Jumlah bahan rusak">
+                    </div>
+                    <div class="form-group">
+                        <label for="s_tanggal">Tanggal Keluar</label>
                         <div class="input-group datepicker-wrap">
-                            <input type="text" class="form-control flatpickr-input" id="s_tanggal_masuk" name="s_tanggal_masuk" placeholder="Tanggal Masuk" autocomplete="off" data-input="" readonly>
+                            <input type="text" class="form-control flatpickr-input" id="s_tanggal" name="s_tanggal" placeholder="Tanggal Keluar" autocomplete="off" data-input="" readonly>
                             <div class="input-group-append">
                                 <button class="btn btn-light btn-icon" type="button" title="Choose date" data-toggle><i class="material-icons">calendar_today</i></button>
                                 <button class="btn btn-light btn-icon" type="button" title="Clear" data-clear><i class="material-icons">close</i></button>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="s_jumlah_masuk">Jumlah Bahan Masuk</label>
-                        <input type="text" class="form-control" id="s_jumlah_masuk" name="s_jumlah_masuk"
-                               placeholder="Jumlah bahan masuk">
-                    </div>
-                    <div class="form-group">
-                        <label for="s_jumlah_retur">Jumlah Bahan Retur</label>
-                        <input type="text" class="form-control" id="s_jumlah_retur" name="s_jumlah_retur"
-                               placeholder="Jumlah bahan retur">
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="modal-btn">Tambah Bahan Masuk</button>
+                    <button type="submit" class="btn btn-primary" id="modal-btn">Tambah Bahan Keluar</button>
                 </div>
             </form>
         </div>
@@ -113,7 +106,6 @@
 
     var jsonData = "";
     var jsonBahan = "";
-    var jsonSupplier = "";
     var table = $("#myTable").DataTable();
 
     function loadData(m="", f=null) {
@@ -122,10 +114,10 @@
         removeSelected();
 
         var y = $("#year").val();
-        var url = 'model/bahan-masuk.php?load';
+        var url = 'model/bahan-keluar.php?load';
 
         if (m != "") {
-            url = 'model/bahan-masuk.php?load&filter=' + m + '/' + y;
+            url = 'model/bahan-keluar.php?load&filter=' + m + '/' + y;
             $(f).addClass("active");
         } else {
             $("#montAll").addClass("active");
@@ -144,12 +136,10 @@
                         table.row.add( [
                             i+1,
                             jsonData[i].bahan,
-                            jsonData[i].supplier,
-                            $.format.date(jsonData[i].tanggal_masuk + " 00:00:00", "dd MMM yyyy"),
-                            jsonData[i].jumlah_masuk,
-                            jsonData[i].jumlah_retur,
-                            jsonData[i].bahan_masuk,
-                            jsonData[i].total,
+                            jsonData[i].bahan_produksi,
+                            jsonData[i].bahan_rusak,
+                            jsonData[i].stok,
+                            $.format.date(jsonData[i].tanggal + " 00:00:00", "dd MMM yyyy"),
                             '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
                             '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
                         ] ).draw( false );
@@ -164,32 +154,7 @@
         });
     }
 
-    function loadSupplier(v) {
-        $.ajax({
-            url: "model/supplier.php?loadByBahan",
-            data: {"id_bahan": v},
-            dataType: "JSON",
-            method: "POST",
-            beforeSend: function () {
-                $('#s_supplier').html('<option value="">Loading....</option>');
-            },
-            success: function (data) {
-                if (data["error"] === 0) {
-                    d = data["data"];
-                    let a = "";
-                    for (let i = 0; i < d.length; i++) {
-                        a += '<option value="' + d[i].id + '">' + d[i].nama + '</option>';
-                    }
-                    $("#s_supplier").html(a);
-                } else if (data["error"] === 2) {
-                    $('#s_supplier').html('<option value="">Gagal meload bahan</option>');
-                }
-            }
-        });
-    }
-
     function removeSelected() {
-        $('#montAll').removeClass("active");
         $('#mont1').removeClass("active");
         $('#mont2').removeClass("active");
         $('#mont3').removeClass("active");
@@ -203,8 +168,6 @@
         $('#mont11').removeClass("active");
         $('#mont12').removeClass("active");
     }
-
-    loadData();
 
     function loadBahanBaku() {
         $.ajax({
@@ -236,18 +199,17 @@
         loadBahanBaku()
 
         if (index === "") {
-            $(".modal-title").html("Tambah Bahan Masuk");
+            $(".modal-title").html("Tambah Bahan Keluar");
             $("#modal-btn").html("Tambah");
             $("#modal-form").trigger("reset");
         } else {
-            $(".modal-title").html("Ubah Bahan Masuk");
+            $(".modal-title").html("Ubah Bahan Keluar");
             $("#modal-btn").html("Ubah");
             $("#s_id").val(jsonData[index].id);
             $("#s_bahan").val(jsonData[index].id_bahan);
-            $("#s_supplier").val(jsonData[index].id_supplier);
-            $("#s_tanggal_masuk").val(jsonData[index].tanggal_masuk);
-            $("#s_jumlah_masuk").val(jsonData[index].jumlah_masuk);
-            $("#s_jumlah_retur").val(jsonData[index].jumlah_retur);
+            $("#s_bahan_produksi").val(jsonData[index].bahan_produksi);
+            $("#s_bahan_rusak").val(jsonData[index].bahan_rusak);
+            $("#s_tanggal").val(jsonData[index].tanggal);
         }
         $("#myModal").modal("show");
     }
@@ -255,7 +217,7 @@
     $("#modal-form").on("submit", function (e) {
         e.preventDefault();
         $.ajax({
-            url: "model/bahan-masuk.php?add-update",
+            url: "model/bahan-keluar.php?add-update",
             data: $(this).serialize(),
             dataType: "JSON",
             method: "POST",
@@ -290,7 +252,7 @@
 
     function hapus(index) {
         $.ajax({
-            url: "model/bahan-masuk.php?hapus",
+            url: "model/bahan-keluar.php?hapus",
             data: {"id" : jsonData[index].id},
             dataType: "JSON",
             method: "POST",

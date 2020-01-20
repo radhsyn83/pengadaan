@@ -139,6 +139,8 @@ if (!isset($_SESSION["id"])) {
             loadPage("kepala.php");
         } else if (jabatanId === "3") {
             loadPage("staff.php");
+        } else if (jabatanId === "1") {
+            loadPage("manager.php");
         }
     });
 
