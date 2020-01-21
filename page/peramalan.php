@@ -50,8 +50,12 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Bahan</th>
-            <th scope="col">Jumlah Bahan</th>
             <th scope="col">Supplier</th>
+            <th scope="col">Estimasi</th>
+            <th scope="col">Stok</th>
+            <th scope="col">Jumlah</th>
+            <th scope="col">Total Harga</th>
+            <th scope="col">Pengadaan</th>
         </tr>
         </thead>
         <tbody id="table-main"></tbody>
@@ -118,8 +122,12 @@
                         a += '<tr>\n' +
                             '    <td scope="col">' + (i+1) + '</td>\n' +
                             '    <td scope="col">' + jsonData[i].bahan + '</td>\n' +
-                            '    <td scope="col">' + Math.ceil(jsonData[i].jumlah) + '</td>\n' +
-                            '    <td scope="col"><button type="button" class="btn btn-text-success btn-icon rounded-circle" onclick="loadDataSupplier(' + i + ')"><i class="material-icons">remove_red_eye</i></button></td>\n' +
+                            '    <td scope="col">' + jsonData[i].supplier + '</td>\n' +
+                            '    <td scope="col">' + Math.ceil(jsonData[i].estimasi) + '</td>\n' +
+                            '    <td scope="col">' + jsonData[i].stok + '</td>\n' +
+                            '    <td scope="col">' + jsonData[i].jumlah + '</td>\n' +
+                            '    <td scope="col">' + jsonData[i].total_harga + '</td>\n' +
+                            '    <td scope="col">' + jsonData[i].pengadaan + '</td>\n' +
                             ' </tr>'
                     }
                     $("#table-main").html(a);

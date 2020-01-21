@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9238ed74-9304-45d1-b6f5-75b536245b76" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/model/bahan-keluar.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/page/bahan-keluar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kepala.php" beforeDir="false" afterPath="$PROJECT_DIR$/kepala.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manager.php" beforeDir="false" afterPath="$PROJECT_DIR$/manager.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-masuk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model/pengadaan.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/pengadaan.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/bahan-masuk.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/bahan-masuk.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/page/pengadaan.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/pengadaan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/bahan-keluar.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-keluar.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/peramalan.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/peramalan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/peramalan.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/peramalan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staff.php" beforeDir="false" afterPath="$PROJECT_DIR$/staff.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +115,7 @@
       <workItem from="1577157808108" duration="1619000" />
       <workItem from="1577319829128" duration="1029000" />
       <workItem from="1577341083082" duration="1138000" />
-      <workItem from="1579521380021" duration="4901000" />
+      <workItem from="1579521380021" duration="11215000" />
     </task>
     <task id="LOCAL-00001" summary="fix connection">
       <created>1575431415169</created>

@@ -7,10 +7,10 @@ if (isset($_GET["load"])) {
     $res["msg"] = "";
     $filter = $_GET['filter'];
 
-    $sql = "SELECT a.*, b.nama, (SELECT (aa.jumlah_masuk - aa.jumlah_retur) as bahan_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = 3 AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$filter') as bahan_masuk ";
+    $sql = "SELECT a.*, b.nama ";
     $sql .= "FROM bahan_keluar a ";
     $sql .= "JOIN bahan b on a.id_bahan = b.id ";
-    $sql .= "WHERE DATE_FORMAT(`a`.`tanggal`, '%m/%Y') = '$filter'";
+    $sql .= "WHERE a.active = 1 AND DATE_FORMAT(`a`.`tanggal`, '%m/%Y') = '$filter'";
 
 //
 //    if (isset($_GET['filter'])) {
@@ -32,8 +32,8 @@ if (isset($_GET["load"])) {
                     "bahan_rusak" => $row[3],
                     "date_add" => $row[4],
                     "tanggal" => $row[5],
-                    "bahan" => $row[6],
-                    "stok" => $stok,
+                    "bahan" => $row[8],
+                    "stok" => $row[6],
                 );
             }
 
@@ -54,6 +54,11 @@ if (isset($_GET["load"])) {
     $bahan_produksi = $_POST["s_jumlah_produksi"];
     $bahan_rusak = $_POST["s_jumlah_rusak"];
     $tanggal = $_POST["s_tanggal"];
+    $stok = 0;
+
+    $tanggalFormat = explode("-", $tanggal);
+    $tanggalFormat = $tanggalFormat[1]."/".$tanggalFormat[0];
+
 
     $res["error"] = 0;
     $res["msg"] = "";
@@ -61,8 +66,14 @@ if (isset($_GET["load"])) {
     $sql = "";
 
     if ($id == "") {
-        $sql = "INSERT INTO `bahan_keluar` (`id_bahan`, `bahan_produksi`, `bahan_rusak`, `tanggal`) ";
-        $sql .= "VALUES ('$id_bahan','$bahan_produksi','$bahan_rusak','$tanggal')";
+        //GET LAST STOCK
+        $sqlStok = "SELECT stok, (SELECT (aa.jumlah_masuk - aa.jumlah_retur) as jumlah_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = '$id_bahan' AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$tanggalFormat') as bahan_masuk FROM bahan_keluar WHERE id_bahan = '$id_bahan' AND active = 1 ORDER BY id DESC LIMIT 1;";
+        $lastStok = $mysql->query($sqlStok)->fetch_row()[0];
+        $bahanMasuk = $mysql->query($sqlStok)->fetch_row()[1];
+        $stok = $lastStok + ((int) $bahanMasuk - ((int) $bahan_produksi + (int) $bahan_rusak));
+
+        $sql = "INSERT INTO `bahan_keluar` (`id_bahan`, `bahan_produksi`, `bahan_rusak`, `tanggal`, `stok`) ";
+        $sql .= "VALUES ('$id_bahan','$bahan_produksi','$bahan_rusak','$tanggal', '$stok')";
 
         $res["msg"] = "Bahan keluar berhasil ditambahkan.";
 

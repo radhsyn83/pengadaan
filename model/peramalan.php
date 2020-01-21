@@ -9,7 +9,7 @@ if (isset($_GET["load"])) {
     $m = $_GET["m"];
     $y = $_GET["y"];
 
-    $sql = "SELECT a.*, b.nama as bahan FROM `peramalan` a";
+    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.stok FROM bahan_keluar aa WHERE active = 1 AND DATE_FORMAT(`aa`.`tanggal`, '%m/%Y') = '07/2019') as stok FROM `peramalan` a";
     $sql .= " LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= " WHERE bulan = $m AND tahun = $y AND a.active = 1 ";
 
@@ -17,11 +17,42 @@ if (isset($_GET["load"])) {
         if ($result->num_rows > 0) {
             $res["msg"] = "Peramalan";
             while ($row = $result->fetch_array()) {
+                //Supplier Ranking
+                $spp = getRankingSupplier($mysql, $row["id"]);
+
+                $estimasi = $row["estimasi"];
+
+                //Stok
+                $stok = 0;
+                if ($row["stok"] != null) {
+                    $stok = $row["stok"];
+                }
+
+                //Jumlah
+                $jumlah = 0;
+                $jumlah = (int)$estimasi - (int)$stok;
+                if ($jumlah < 0) {
+                    $jumlah = 0;
+                }
+
+                //Total Harga
+                $total_harga = (int)$spp->harga_bahan * (int)$jumlah;
+
+                //Pengadaan
+                $pengadaan = "Pengadaan";
+                if ($jumlah <= 1000) {
+                    $pengadaan = "Tidak";
+                }
+
                 $data[] = array(
                     "id" => $row["id"],
-                    "jumlah" => $row["jumlah"],
-                    "date_add" => $row["date_add"],
-                    "bahan" => $row["bahan"]
+                    "bahan" => $row["bahan"],
+                    "supplier" => $spp->supplier,
+                    "estimasi" => $row["estimasi"],
+                    "stok" => $stok,
+                    "jumlah" => $jumlah,
+                    "total_harga" => number_format($total_harga),
+                    "pengadaan" => $pengadaan
                 );
             }
 
@@ -205,7 +236,7 @@ if (isset($_GET["load"])) {
                                 $sqlRangking = 'SELECT a.id as id_supplier_bahan, ((' . $bHarga . '/a.bobot_harga)*2) + ((a.bobot_waktu/' . $bWaktu . ')*4) + ((a.bobot_retur/' . $bRetur . ')*4) as nilai_akhir';
                                 $sqlRangking .= ' FROM supplier_bahan a';
                                 $sqlRangking .= ' JOIN bahan_masuk b on a.id = b.id_supplier_bahan';
-                                $sqlRangking .= ' WHERE a.id_bahan = "'.$id_bahan.'" AND a.active = "1"';
+                                $sqlRangking .= ' WHERE a.id_bahan = "' . $id_bahan . '" AND a.active = "1"';
                                 $sqlRangking .= ' GROUP BY a.id, a.id_supplier';
                                 $sqlRangking .= ' ORDER BY nilai_akhir DESC';
 
@@ -262,4 +293,24 @@ function showError($mysql, $res, $msg = "")
     $res["msg"] = $msg;
     echo json_encode($res);
     return;
+}
+
+function getRankingSupplier($mysql, $id_peramalan)
+{
+    $sql = "SELECT cc.nama as supplier, b.harga as harga_bahan FROM `peramalan_supplier` bb  JOIN `supplier_bahan` b ON bb.id_supplier_bahan = b.id  JOIN `supplier` cc ON b.id_supplier = cc.id  WHERE bb.id_peramalan = '$id_peramalan' LIMIT  1;";
+
+    if ($result = $mysql->query($sql)) {
+        if ($result->num_rows > 0) {
+
+            while ($row = $result->fetch_array()) {
+                $a = $row[0];
+                $b = $row[1];
+                $d = new StdClass();
+                $d->supplier = $a;
+                $d->harga_bahan = $b;
+
+                return $d;
+            }
+        }
+    }
 }
