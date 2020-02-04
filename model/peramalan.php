@@ -9,7 +9,7 @@ if (isset($_GET["load"])) {
     $m = $_GET["m"];
     $y = $_GET["y"];
 
-    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.stok FROM bahan_keluar aa WHERE active = 1 AND DATE_FORMAT(`aa`.`tanggal`, '%m/%Y') = '07/2019') as stok FROM `peramalan` a";
+    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.stok FROM bahan_keluar aa WHERE active = 1 AND DATE_FORMAT(`aa`.`tanggal`, '%m/%Y') = '$m/$y') as stok FROM `peramalan` a";
     $sql .= " LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= " WHERE bulan = $m AND tahun = $y AND a.active = 1 ";
 

@@ -18,7 +18,6 @@ if (isset($_GET["load"])) {
 //        $sql .= "WHERE DATE_FORMAT(`a`.`tanggal`, '%m/%Y') = '$filter'";
 //    }
 
-
     if ($result = $mysql->query($sql)) {
         if ($result->num_rows > 0) {
             $res["msg"] = "Bahan Keluar";
@@ -67,9 +66,16 @@ if (isset($_GET["load"])) {
 
     if ($id == "") {
         //GET LAST STOCK
-        $sqlStok = "SELECT stok, (SELECT (aa.jumlah_masuk - aa.jumlah_retur) as jumlah_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = '$id_bahan' AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$tanggalFormat') as bahan_masuk FROM bahan_keluar WHERE id_bahan = '$id_bahan' AND active = 1 ORDER BY id DESC LIMIT 1;";
-        $lastStok = $mysql->query($sqlStok)->fetch_row()[0];
-        $bahanMasuk = $mysql->query($sqlStok)->fetch_row()[1];
+        $sqlStok = "SELECT stok, (SELECT sum((aa.jumlah_masuk - aa.jumlah_retur)) as jumlah_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = '$id_bahan' AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$tanggalFormat' AND aa.active = 1) as bahan_masuk FROM bahan_keluar WHERE id_bahan = '$id_bahan' AND active = 1 ORDER BY id DESC LIMIT 1;";
+
+        $lastStok = 0;
+        if ($mysql->query($sqlStok)->fetch_row()[0] != null) {
+            $lastStok = $mysql->query($sqlStok)->fetch_row()[0];
+        }
+        $bahanMasuk = 0;
+        if ($mysql->query($sqlStok)->fetch_row()[1] != null) {
+            $bahanMasuk = $mysql->query($sqlStok)->fetch_row()[1];
+        }
         $stok = $lastStok + ((int) $bahanMasuk - ((int) $bahan_produksi + (int) $bahan_rusak));
 
         $sql = "INSERT INTO `bahan_keluar` (`id_bahan`, `bahan_produksi`, `bahan_rusak`, `tanggal`, `stok`) ";
@@ -82,6 +88,7 @@ if (isset($_GET["load"])) {
         $res["msg"] = "Bahan keluar  berhasil diubah.";
     }
 
+//    print_r($sql);die;
     if ($result = $mysql->query($sql)) {
 
     } else {
