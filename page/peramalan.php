@@ -135,7 +135,7 @@
                     $('#generate_btn').show();
                     $('#table-main').html('' +
                         '<tr>\n' +
-                        '   <td scope="col" colspan="5"><center>' + data["msg"] + '</center></td>' +
+                        '   <td scope="col" colspan="8"><center>' + data["msg"] + '</center></td>' +
                         '</tr>')
                 }
             }

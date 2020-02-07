@@ -66,7 +66,7 @@ if (isset($_GET["load"])) {
 
     if ($id == "") {
         //GET LAST STOCK
-        $sqlStok = "SELECT stok, (SELECT sum((aa.jumlah_masuk - aa.jumlah_retur)) as jumlah_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = '$id_bahan' AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$tanggalFormat' AND aa.active = 1) as bahan_masuk FROM bahan_keluar WHERE id_bahan = '$id_bahan' AND active = 1 ORDER BY id DESC LIMIT 1;";
+        $sqlStok = "SELECT stok, (SELECT IFNULL(sum((aa.jumlah_masuk - aa.jumlah_retur)), 0) as jumlah_masuk FROM bahan_masuk aa JOIN supplier_bahan bb on aa.id_supplier_bahan = bb.id WHERE bb.id_bahan = '$id_bahan' AND DATE_FORMAT(`aa`.`tanggal_masuk`, '%m/%Y') = '$tanggalFormat' AND aa.active = 1) as bahan_masuk FROM bahan_keluar WHERE id_bahan = '$id_bahan' AND active = 1 ORDER BY id DESC LIMIT 1;";
 
         $lastStok = 0;
         if ($mysql->query($sqlStok)->fetch_row()[0] != null) {

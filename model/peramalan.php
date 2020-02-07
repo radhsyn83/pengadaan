@@ -9,9 +9,14 @@ if (isset($_GET["load"])) {
     $m = $_GET["m"];
     $y = $_GET["y"];
 
-    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.stok FROM bahan_keluar aa WHERE active = 1 AND DATE_FORMAT(`aa`.`tanggal`, '%m/%Y') = '$m/$y') as stok FROM `peramalan` a";
+    if ($m > 9) {
+        $m = "0"+$m;
+    }
+
+    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.sisa FROM bahan_sisa aa WHERE aa.tahun = ".$y." AND aa.bulan = ".$m." AND aa.id_bahan = b.id) as stok FROM `peramalan` a";
     $sql .= " LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= " WHERE bulan = $m AND tahun = $y AND a.active = 1 ";
+
 
     if ($result = $mysql->query($sql)) {
         if ($result->num_rows > 0) {
@@ -157,7 +162,7 @@ if (isset($_GET["load"])) {
     $dateEnd = date('Y-m', strtotime('-1 months', strtotime($dateToDiff)));
     $dateEnd = $dateEnd . "-31";
     //Start transaction
-    $mysql->begin_transaction();
+//    $mysql->begin_transaction();
 
     # STEP 0 : GET ALL BAHAN
     $sqlBahan = "SELECT id FROM `bahan` WHERE `active` = 1";
@@ -169,10 +174,9 @@ if (isset($_GET["load"])) {
 
                 $id_bahan = $row["id"];
                 # STEP 1.1 : Generate rata2 kebutuhan bedasarkan bulan
-                $sqlGetRata = 'SELECT (AVG(b.kebutuhan)) as rata_rata, (SUM(b.jumlah_masuk) - SUM(b.kebutuhan)) as sisa';
-                $sqlGetRata .= ' FROM supplier_bahan a';
-                $sqlGetRata .= ' JOIN bahan_masuk b on a.id = b.id_supplier_bahan';
-                $sqlGetRata .= ' WHERE a.id_bahan = "' . $id_bahan . '" AND (b.tanggal_masuk BETWEEN "' . $dateStart . '" AND "' . $dateEnd . '") AND a.active = "1"';
+                $sqlGetRata = 'SELECT AVG(a.bahan_produksi) as rata_rata, (SELECT stok FROM bahan_keluar WHERE id_bahan = '. $id_bahan .' AND active = 1 ORDER BY id DESC LIMIT 1) as sisa ';
+                $sqlGetRata .= ' FROM bahan_keluar a';
+                $sqlGetRata .= ' WHERE a.id_bahan = "' . $id_bahan . '" AND (a.tanggal BETWEEN "' . $dateStart . '" AND "' . $dateEnd . '") AND a.active = "1"';
 
                 # STEP 1.2 : INSERT sisa to table bahan_sisa
                 if ($resRata = $mysql->query($sqlGetRata)) {
@@ -180,26 +184,29 @@ if (isset($_GET["load"])) {
                         while ($rowRata = $resRata->fetch_array()) {
                             $sisa = 0;
                             $avg = floatval($rowRata["rata_rata"]);
+                            $sisa = floatval($rowRata["sisa"]);
 
-                            if ($addSisa) {
-                                //Set sisa
-
-                                if (floatval($rowRata["sisa"]) > 0) {
-                                    $sisa = floatval($rowRata["sisa"]);
-                                }
-
-                                //Set Avg
-                                if ($sisa > 0) {
-                                    if ($sisa > $avg) {
-                                        $avg = $sisa - $avg;
-                                    } else {
-                                        $avg = $avg - $sisa;
-                                    }
-                                }
-                            }
+//                            if ($addSisa) {
+//                                //Set sisa
+//
+//                                if (floatval($rowRata["sisa"]) > 0) {
+//                                }
+//
+//                                //Set Avg
+//                                if ($sisa > 0) {
+//                                    if ($sisa > $avg) {
+//                                        $avg = $sisa - $avg;
+//                                    } else {
+//                                        $avg = $avg - $sisa;
+//                                    }
+//                                }
+//                            }
+//
+//                            print_r($sisa);die;
 
                             $sqlInsertSisa = "INSERT INTO `bahan_sisa` (`id_bahan`, `sisa`, `tahun`, `bulan`) ";
                             $sqlInsertSisa .= "VALUES ('$id_bahan','$sisa','$y', '$m')";
+
                             if ($mysql->query($sqlInsertSisa)) {
                                 //Sukses
                             } else {

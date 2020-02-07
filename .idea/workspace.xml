@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/bahan-keluar.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/bahan-keluar.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/model/peramalan.php" beforeDir="false" afterPath="$PROJECT_DIR$/model/peramalan.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/page/peramalan.php" beforeDir="false" afterPath="$PROJECT_DIR$/page/peramalan.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -120,7 +121,8 @@
       <workItem from="1580694004646" duration="226000" />
       <workItem from="1580699563764" duration="1880000" />
       <workItem from="1580808367534" duration="788000" />
-      <workItem from="1580809926477" duration="1072000" />
+      <workItem from="1580809926477" duration="4114000" />
+      <workItem from="1581079575235" duration="4011000" />
     </task>
     <task id="LOCAL-00001" summary="fix connection">
       <created>1575431415169</created>
@@ -192,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1577346448969</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="new update">
+      <created>1580819510188</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1580819510188</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
