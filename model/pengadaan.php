@@ -48,6 +48,8 @@ WHERE a.active = 1 AND b.active = 1 ";
     $tanggal_pengadaan = $_POST["s_tanggal_pengadaan"];
     $jumlah = $_POST["s_jumlah"];
 
+    $id_supplier_bahan = explode("#", $id_supplier_bahan)[0];
+
     $res["error"] = 0;
     $res["msg"] = "";
 
