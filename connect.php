@@ -1,5 +1,5 @@
 <?php
-$mysql = new mysqli("165.22.242.133","admin","sense324","db_rio");
+$mysql = new mysqli("165.22.242.133","admin","sense324","db_pengadaan");
 
 // Check connection
 if ($mysql -> connect_errno) {
