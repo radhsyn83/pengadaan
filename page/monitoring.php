@@ -66,8 +66,6 @@
         });
     }
 
-    loadChart()
-
     function loadBahanBaku() {
         $.ajax({
             url: "model/bahan-baku.php?load",
@@ -85,7 +83,7 @@
                         a += '<option value="' + jsonBahan[i].id + '">' + jsonBahan[i].nama + '</option>';
                     }
                     $("#filter_bahan").html(a);
-                    loadSupplier(jsonBahan[0].id);
+                    loadChart()
                 } else if (data["error"] === 2) {
                     $('#filter_bahan').html('<option value="">Gagal meload bahan</option>');
                 }

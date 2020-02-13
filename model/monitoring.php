@@ -39,7 +39,8 @@ if (isset($_GET["load_bahan"])) {
 
     //GET ESTIMASI
     $dataEstimasi = array();
-    $sqlEstimasi = "SELECT p.id, p.jumlah, p.bulan, p.tahun FROM peramalan p";
+    $sqlEstimasi = "SELECT p.id, p.jumlah, (case when (p.bulan > 5 and p.bulan < 11) THEN (p.bulan+1) ELSE p.bulan+1 END)
+ as bulan, p.tahun FROM peramalan p";
     $sqlEstimasi .= " join peramalan_supplier ps on ps.id_peramalan = p.id";
     $sqlEstimasi .= " WHERE p.id_bahan = '$id_bahan' AND tahun = '$tahun'";
     $sqlEstimasi .= " group by p.id";
