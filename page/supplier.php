@@ -128,20 +128,29 @@
 
                     <div class="form-group">
                         <label for="b_harga">Bobot Harga</label>
-                        <input type="text" class="form-control" id="b_harga" name="b_harga"
-                               placeholder="0">
+                        <select class="form-control" id="b_harga" name="b_harga">
+                            <option value="2">Sangat Baik</option>
+                            <option value="3">Cukup Baik</option>
+                            <option value="5">Kurang Baik</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="b_waktu">Bobot Waktu</label>
-                        <input type="text" class="form-control" id="b_waktu" name="b_waktu"
-                               placeholder="0">
+                        <select class="form-control" id="b_waktu" name="b_waktu">
+                            <option value="5">Sangat Baik</option>
+                            <option value="3">Cukup Baik</option>
+                            <option value="2">Kurang Baik</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
                         <label for="b_retur">Bobot Retur</label>
-                        <input type="text" class="form-control" id="b_retur" name="b_retur"
-                               placeholder="0">
+                        <select class="form-control" id="b_retur" name="b_retur">
+                            <option value="5">Sangat Baik</option>
+                            <option value="3">Cukup Baik</option>
+                            <option value="2">Kurang Baik</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

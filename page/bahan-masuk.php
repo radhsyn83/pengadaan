@@ -10,7 +10,7 @@
     <div class="col-md-8">
         <!-- Button date Tab -->
         <div class="btn-group" role="group">
-            <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">All</button>
+<!--            <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">All</button>-->
             <button type="button" class="btn btn-faded-success" id="mont1" onclick="loadData('01', this)">Jan</button>
             <button type="button" class="btn btn-faded-success" id="mont2" onclick="loadData('02', this)">Feb</button>
             <button type="button" class="btn btn-faded-success" id="mont3" onclick="loadData('03', this)">Mar</button>
@@ -204,7 +204,7 @@
         $('#mont12').removeClass("active");
     }
 
-    loadData();
+    // loadData();
 
     function loadBahanBaku() {
         $.ajax({

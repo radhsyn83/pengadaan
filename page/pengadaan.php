@@ -10,9 +10,9 @@
         <!-- Button date Tab -->
         <div class="btn-group" role="group">
             <div class="btn-group btn-group-sm" role="group">
-                <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">
-                    All
-                </button>
+<!--                <button type="button" class="btn btn-faded-success active" id="montAll" onclick="loadData('', this)">-->
+<!--                    All-->
+<!--                </button>-->
                 <button type="button" class="btn btn-faded-success" id="mont1" onclick="loadData('01', this)">Jan
                 </button>
                 <button type="button" class="btn btn-faded-success" id="mont2" onclick="loadData('02', this)">Feb
@@ -62,7 +62,7 @@
                 <th scope="col">Tanggal Pengadaan</th>
                 <th scope="col">Jumlah</th>
                 <th scope="col">Total Harga</th>
-                <th scope="col">Aksi</th>
+<!--                <th scope="col">Aksi</th>-->
             </tr>
             </thead>
             <tbody id="table-main"></tbody>
@@ -162,9 +162,8 @@
                                 jsonData[i].supplier,
                                 $.format.date(jsonData[i].tanggal_pengadaan + " 00:00:00", "dd MMM yyyy"),
                                 jsonData[i].jumlah,
-                                jsonData[i].harga,
-                                '<button type="button" class="btn btn-text-primary btn-icon rounded-circle" onclick="showModal(' + i + ')"><i class="material-icons">edit</i></button>\n' +
-                                '<button type="button" class="btn btn-text-danger btn-icon rounded-circle" onclick="hapus(' + i + ')"><i class="material-icons">delete</i></button>'
+                                jsonData[i].harga
+                                // 
                             ] ).draw( false );
                         }
                     } else if (data["error"] === 2) {
@@ -177,7 +176,7 @@
             });
         }
 
-        loadData();
+        // loadData();
 
         function removeSelected() {
             $('#montAll').removeClass("active");

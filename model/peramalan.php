@@ -13,11 +13,10 @@ if (isset($_GET["load"])) {
         $m = "0"+$m;
     }
 
-    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.sisa FROM bahan_sisa aa WHERE aa.tahun = ".$y." AND aa.bulan = ".$m." AND aa.id_bahan = b.id) as stok FROM `peramalan` a";
+    $sql = "SELECT a.id, b.nama as bahan, a.jumlah as estimasi, (SELECT aa.sisa FROM bahan_sisa aa WHERE aa.tahun = ".$y." AND aa.bulan = ".$m." AND aa.id_bahan = b.id ORDER BY aa.id DESC LIMIT 1) as stok FROM `peramalan` a";
     $sql .= " LEFT JOIN `bahan` b ON a.id_bahan = b.id ";
     $sql .= " WHERE bulan = $m AND tahun = $y AND a.active = 1 ";
-
-
+    
     if ($result = $mysql->query($sql)) {
         if ($result->num_rows > 0) {
             $res["msg"] = "Peramalan";
@@ -162,7 +161,7 @@ if (isset($_GET["load"])) {
     $dateEnd = date('Y-m', strtotime('-1 months', strtotime($dateToDiff)));
     $dateEnd = $dateEnd . "-31";
     //Start transaction
-//    $mysql->begin_transaction();
+    $mysql->begin_transaction();
 
     # STEP 0 : GET ALL BAHAN
     $sqlBahan = "SELECT id FROM `bahan` WHERE `active` = 1";
@@ -171,10 +170,18 @@ if (isset($_GET["load"])) {
         if ($resBahan->num_rows > 0) {
             while ($row = $resBahan->fetch_array()) {
                 $avg = 0;
+                $tahunStok = $y;
+                $bulanStok = $m-1;
+                if ($bulanStok == 0) {
+                    $bulanStok = 12;
+                    $tahunStok = $y-1;
+                }
+
+                $f = $bulanStok."/".$tahunStok;
 
                 $id_bahan = $row["id"];
                 # STEP 1.1 : Generate rata2 kebutuhan bedasarkan bulan
-                $sqlGetRata = 'SELECT AVG(a.bahan_produksi) as rata_rata, (SELECT stok FROM bahan_keluar WHERE id_bahan = '. $id_bahan .' AND active = 1 ORDER BY id DESC LIMIT 1) as sisa ';
+                $sqlGetRata = 'SELECT AVG(a.bahan_produksi) as rata_rata, (SELECT bk.stok FROM bahan_keluar bk WHERE bk.id_bahan = ' . $id_bahan . ' AND DATE_FORMAT(bk.tanggal, "%c/%Y") = "'.$f.'" AND bk.active = 1 ORDER BY id DESC LIMIT 1) as sisa ';
                 $sqlGetRata .= ' FROM bahan_keluar a';
                 $sqlGetRata .= ' WHERE a.id_bahan = "' . $id_bahan . '" AND (a.tanggal BETWEEN "' . $dateStart . '" AND "' . $dateEnd . '") AND a.active = "1"';
 
@@ -263,12 +270,11 @@ if (isset($_GET["load"])) {
                                             }
                                         }
                                     } else {
-                                        showError($mysql, $res, "Step 4 Error");
+                                        showError($mysql, $res, "Step 4 Error 1");
                                     }
                                 } else {
-                                    showError($mysql, $res, "Step 4 Error");
+                                    showError($mysql, $res, "Step 4 Error 2");
                                 }
-
                             }
                         } else {
                             showError($mysql, $res, "Step 2 Error");
