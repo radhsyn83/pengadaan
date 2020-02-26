@@ -111,6 +111,7 @@ if (isset($_GET["load"])) {
     $tanggal = explode("-", $_POST['tanggal']);
     $bahan = explode("#", $_POST['bahan']);
 
+
     $id_bahan = $bahan[1];
 
     $sql = "SELECT jumlah";

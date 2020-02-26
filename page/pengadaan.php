@@ -83,17 +83,11 @@
                     </button>
                 </div>
                 <form id="modal-form">
-
                     <div class="modal-body">
                         <input type="hidden" class="form-control" id="s_id" name="s_id">
                         <div class="form-group">
-                            <label for="s_supplier">Nama Supplier</label>
-                            <select class="form-control" id="s_supplier" name="s_supplier"
-                                    onchange="loadBahan(this.value)"></select>
-                        </div>
-                        <div class="form-group">
-                            <label for="s_supplier_bahan">Nama Bahan</label>
-                            <select class="form-control" id="s_supplier_bahan" onchange="getPeramalan()" name="s_supplier_bahan"></select>
+                            <label for="nama_bahan">Nama Bahan</label>
+                            <select class="form-control" id="nama_bahan" name="nama_bahan" onchange="getPeramalan()" ></select>
                         </div>
                         <div class="form-group">
                             <label for="s_tanggal_pengadaan">Tanggal Pengadaan</label>
@@ -110,7 +104,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="s_jumlah">Jumlah Bahan</label>
+                            <label for="s_supplier">Nama Supplier</label>
+                            <select class="form-control" id="s_supplier_bahan" name="s_supplier_bahan"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="s_jumlah">Jumlah</label>
                             <input type="text" class="form-control" id="s_jumlah" name="s_jumlah"
                                    placeholder="Jumlah bahan">
                         </div>
@@ -194,22 +192,83 @@
             $('#mont12').removeClass("active");
         }
 
+        function loadBahanBaku() {
+            $.ajax({
+                url: "model/bahan-baku.php?load",
+                data: $(this).serialize(),
+                dataType: "JSON",
+                method: "POST",
+                beforeSend: function () {
+                    $('#nama_bahan').html('<option value="">Loading....</option>');
+                },
+                success: function (data) {
+                    if (data["error"] === 0) {
+                        jsonBahan = data["data"];
+                        let a = "";
+                        for (let i = 0; i <jsonBahan.length; i++) {
+                            a += '<option value="' + jsonBahan[i].id + '">' + jsonBahan[i].nama + '</option>';
+                        }
+                        $("#nama_bahan").html(a);
+                    } else if (data["error"] === 2) {
+                        $('#nama_bahan').html('<option value="">Gagal meload bahan</option>');
+                    }
+                }
+            });
+        }
+
+        loadBahanBaku()
+
+        // function getPeramalan() {
+        //
+        //     var bahan = $("#s_supplier_bahan").val();
+        //     var tgl = $("#s_tanggal_pengadaan").val();
+        //
+        //     if (bahan !== "" && tgl !== "") {
+        //         $.ajax({
+        //             url: "model/peramalan.php?loadBahanSisa",
+        //             data: {"tanggal": tgl, "bahan": bahan},
+        //             dataType: "JSON",
+        //             method: "POST",
+        //             beforeSend: function () {
+        //             },
+        //             success: function (data) {
+        //                 if (data["error"] === 0) {
+        //                     $("#s_jumlah").val(Math.floor(data["data"]));
+        //                 } else if (data["error"] === 2) {
+        //                     $('#s_supplier_bahan').html('<option value="">Gagal meload bahan</option>');
+        //                 }
+        //             }
+        //         });
+        //     }
+        //
+        // }
+
         function getPeramalan() {
 
-            var bahan = $("#s_supplier_bahan").val();
+            var bahan = $("#nama_bahan").val();
             var tgl = $("#s_tanggal_pengadaan").val();
 
             if (bahan !== "" && tgl !== "") {
                 $.ajax({
-                    url: "model/peramalan.php?loadBahanSisa",
+                    url: "model/pengadaan.php?loadPeramalan",
                     data: {"tanggal": tgl, "bahan": bahan},
                     dataType: "JSON",
                     method: "POST",
                     beforeSend: function () {
+                        $('#s_supplier_bahan').html('<option value="">Loading....</option>');
+                        $('#jumlah').html('Loading....');
                     },
                     success: function (data) {
                         if (data["error"] === 0) {
-                            $("#s_jumlah").val(Math.floor(data["data"]));
+                            jsonSupp = data["supplier"]
+                            let a = "";
+                            for (let i = 0; i <jsonSupp.length; i++) {
+                                a += '<option value="' + jsonSupp[i].id_supplier_bahan + '">' + jsonSupp[i].nama_supplier + '</option>';
+                            }
+                            $("#s_supplier_bahan").html(a);
+
+
+                            $("#s_jumlah").val(data["jumlah"]);
                         } else if (data["error"] === 2) {
                             $('#s_supplier_bahan').html('<option value="">Gagal meload bahan</option>');
                         }
@@ -217,10 +276,6 @@
                 });
             }
 
-        }
-
-        function supplierBahanChange() {
-            console.log("ea");
         }
 
         function loadBahan(v) {
@@ -255,7 +310,7 @@
                 dataType: "JSON",
                 method: "POST",
                 beforeSend: function () {
-                    $('#s_supplier').html('<option value="">Loading....</option>');
+                    $('#nama_bahan').html('<option value="">Loading....</option>');
                 },
                 success: function (data) {
                     if (data["error"] === 0) {
@@ -264,10 +319,9 @@
                         for (let i = 0; i < s.length; i++) {
                             a += '<option value="' + s[i].id + '">' + s[i].nama + '</option>';
                         }
-                        $("#s_supplier").html(a);
-                        loadBahan(s[0].id);
+                        $("#nama_bahan").html(a);
                     } else if (data["error"] === 2) {
-                        $('#s_supplier').html('<option value="">Gagal meload Supplier</option>');
+                        $('#nama_bahan').html('<option value="">Gagal meload Supplier</option>');
                     }
                 }
             });
@@ -277,7 +331,7 @@
             $("#modal-btn").prop("disabled", false);
             $("#s_supplier_bahan").html("");
             $("#s_supplier").html("");
-            loadSupplier();
+            // loadSupplier();
 
             if (index === "") {
                 $(".modal-title").html("Tambah Pengadaan");
